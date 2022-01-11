@@ -1,0 +1,12 @@
+# images
+*.bmp
+
+# folders
+/Debug
+/x64
+/Libraries/blend2d
+/.vs
+
+# libraries
+*.dll
+*.lib

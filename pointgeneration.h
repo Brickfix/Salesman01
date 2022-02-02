@@ -2,7 +2,7 @@
 #ifndef __POINTGENERATION_H_INCLUDED__
 #define __POINTGENERATION_H_INCLUDED__
 
-#include <deque>
+#include <vector>
 #include <random>
 #include <cmath>
 
@@ -17,9 +17,9 @@
 * @param padding minimum distance to edge of image
 * @param minPointDist minimum distance between points
 *
-* @return deque of points created
+* @return vector of points created
 */
-std::deque<int> createPoints(int const nPoints, int const imgPixels, int const padding = 40, int const minPointDist = 40);
+std::vector<int> createPoints(int const nPoints, int const imgPixels, int const padding = 40, int const minPointDist = 40);
 
 #endif
 

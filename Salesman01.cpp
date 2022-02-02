@@ -1,14 +1,17 @@
 #include<iostream>
-#include<blend2d.h>
+// #include<blend2d.h>
+// #include"blend2d.h"
 #include<deque>
 #include<string>
 
+#include "Libraries/blend2d/src/blend2d.h"
 #include "imgfuncs.h"
 #include "pointgeneration.h"
-#include "pathcalcs.h"
+// #include "pathcalcs.h"
+#include "Traveler.h"
 
 #define PRADIUS 20
-#define NPOINTS 7
+#define NPOINTS 11
 
 
 int main()
@@ -16,29 +19,43 @@ int main()
 
     // int points[10] = { 100, 100, 300, 300, 150, 400, 50, 300, 350, 50 };
     // std::deque<int> points = { 100, 100, 300, 300, 150, 400, 50, 300, 350, 50 };
-    std::deque<int> points = createPoints(NPOINTS, 480);
+    std::vector<int> points = createPoints(NPOINTS, 480);
 
-    double distanceMat[NPOINTS * NPOINTS];
+    Traveler DaBoss(points);
 
-    fillDistanceMat(points, NPOINTS, distanceMat);
-    std::deque<int> pointIndexes = bruteforce(points, NPOINTS, distanceMat);
+    DaBoss.createDistMat();
 
-    BLImage img = createImage(points, points.size(), PRADIUS);
-    
-    std::string pointsstring = std::to_string(NPOINTS);
-    std::string name("_points.bmp");
+    std::vector<int> bestIndexes = DaBoss.iterateThroughPoints();
 
-    name = pointsstring + name;
+    std::vector<int>::iterator iter;
+    std::cout << "Best indexes: 0";
+    for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
+        std::cout << ", " << * iter;
+    }
+    std::cout << std::endl;
 
-    saveBLImg(img, name.c_str());
 
-    img = drawBestRoute(img, points, pointIndexes);
+    // double distanceMat[NPOINTS * NPOINTS];
 
-    std::string drawName = ("_best_route.bmp");
-    name = pointsstring + drawName;
-
-    saveBLImg(img, name.c_str());
-
+    // fillDistanceMat(points, NPOINTS, distanceMat);
+    // std::deque<int> pointIndexes = bruteforce(points, NPOINTS, distanceMat);
+    // 
+    // BLImage img = createImage(points, points.size(), PRADIUS);
+    // 
+    // std::string pointsstring = std::to_string(NPOINTS);
+    // std::string name("_points.bmp");
+    // 
+    // name = pointsstring + name;
+    // 
+    // saveBLImg(img, name.c_str());
+    // 
+    // drawBestRoute(img, points, pointIndexes);
+    // 
+    // std::string drawName = ("_best_route.bmp");
+    // name = pointsstring + drawName;
+    // 
+    // saveBLImg(img, name.c_str());
+    // 
     return 0;
 }
 

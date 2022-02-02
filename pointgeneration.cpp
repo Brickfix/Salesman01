@@ -1,12 +1,12 @@
 #include "pointgeneration.h"
 
-std::deque<int> createPoints(int const nPoints, int const imgPixels, int const padding, int const minPointDist) {
+std::vector<int> createPoints(int const nPoints, int const imgPixels, int const padding, int const minPointDist) {
 
     // Range of allowed coordinates
     int pointRange = imgPixels - 2 * padding;
 
     // init deque where coords are stored
-    std::deque<int> points;
+    std::vector<int> points;
 
     std::default_random_engine randy;
     randy.seed(0711);

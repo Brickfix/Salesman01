@@ -102,12 +102,15 @@ BLImage createImage(std::deque<int> points, int length, int pointRadius) {
     return img;
 }
 
-BLImage drawBestRoute(BLImage img, std::deque<int> points, std::deque<int> indexes) {
+/*
+* Draws a route along the provided points given by the indices 
+*/
+void drawBestRoute(BLImage & img, std::deque<int> points, std::deque<int> indices) {
     
     int firstPoint;
 
-    firstPoint = indexes[0];
-    indexes.pop_front();
+    firstPoint = indices[0];
+    indices.pop_front();
 
     BLContext ctx(img);
     ctx.setStrokeStyle(BLRgba32(0, 200, 50, 255));
@@ -115,7 +118,7 @@ BLImage drawBestRoute(BLImage img, std::deque<int> points, std::deque<int> index
     BLPath path;
     path.moveTo(points[2 * firstPoint], points[2 * firstPoint + 1]);
 
-    for (int ind : indexes) {
+    for (int ind : indices) {
         path.lineTo(points[2 * ind], points[2 * ind + 1]);
     }
 
@@ -123,6 +126,6 @@ BLImage drawBestRoute(BLImage img, std::deque<int> points, std::deque<int> index
     ctx.strokePath(path);
     ctx.end();
 
-    return img;
+    // return img;
 
 }

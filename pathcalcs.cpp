@@ -34,9 +34,9 @@ void fillDistanceMat(std::deque<int> points, const int nPoints, double distanceM
 }
 
 /*
-* Calculates the shortest distance between given points. May not be correct!
+* Calculates the shortest distance between given points. May not be correct.
 */
-double rekursiveRabbitHole(std::list<point> points, point startPoint, point endPoint, const int nPoints, double distanceMat[]) {
+double rekursiveRabbitHole(std::list<point> & points, point startPoint, point endPoint, const int nPoints, double distanceMat[]) {
 	
 	std::list<point>::iterator pIter = points.begin();
 	
@@ -178,7 +178,7 @@ std::deque<std::deque<int>> createDequeOfCombinations(std::list<point> points, c
 	return resultDeque;
 }
 
-std::deque<int> selectShortestRout(std::deque<std::deque<int>> possibleRoutes, int startPointInd, const int nPoints, double distanceMat[]) {
+std::deque<int> selectShortestRout(std::deque<std::deque<int>> & possibleRoutes, int startPointInd, const int nPoints, double distanceMat[]) {
 	double bestDistance, distance;
 	int bestIndex, currentIndex;
 

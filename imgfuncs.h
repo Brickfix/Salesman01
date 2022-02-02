@@ -3,9 +3,9 @@
 #ifndef __IMGFUNCS_H_INCLUDED__
 #define __IMGFUNCS_H_INCLUDED__
 
-#include <blend2d.h>
 #include <deque>
 
+#include "Libraries/blend2d/src/blend2d.h"
 
 /**
 * Saves the image
@@ -23,6 +23,13 @@ void saveBLImg(BLImage img, const char* name);
 */
 BLImage createImage(std::deque<int> points, int length, int pointRadius);
 
-BLImage drawBestRoute(BLImage img, std::deque<int> points, std::deque<int> indexes);
+/*
+* draws a route along the given points following the given indices
+* 
+* @param img :			Pointer to the BLImage img
+* @param points :		The points to draw
+* @param indices :		The indices determining the order of points
+*/
+void drawBestRoute(BLImage & img, std::deque<int> points, std::deque<int> indices);
 
 #endif // !__IMGFUNCS_H_INCLUDED__

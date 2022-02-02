@@ -3,7 +3,7 @@
 #ifndef __IMGFUNCS_H_INCLUDED__
 #define __IMGFUNCS_H_INCLUDED__
 
-#include <deque>
+#include <vector>
 
 #include "Libraries/blend2d/src/blend2d.h"
 
@@ -21,7 +21,7 @@ void saveBLImg(BLImage img, const char* name);
 * @param length :		pixels of the square image per side
 * @param pointRadius :	radius of the circle drawn per point
 */
-BLImage createImage(std::deque<int> points, int length, int pointRadius);
+BLImage createImage(std::vector<int> points, int length, int pointRadius);
 
 /*
 * draws a route along the given points following the given indices
@@ -29,7 +29,8 @@ BLImage createImage(std::deque<int> points, int length, int pointRadius);
 * @param img :			Pointer to the BLImage img
 * @param points :		The points to draw
 * @param indices :		The indices determining the order of points
+* @param firstPoint:	First point, default 0
 */
-void drawBestRoute(BLImage & img, std::deque<int> points, std::deque<int> indices);
+void drawBestRoute(BLImage & img, std::vector<int> points, std::vector<int> indices, int firstPoint=0);
 
 #endif // !__IMGFUNCS_H_INCLUDED__

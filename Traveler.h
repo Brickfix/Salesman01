@@ -1,7 +1,8 @@
 #pragma once
 #ifndef __TRAVELER_H_INCLUDED__
 #define __TRAVELER_H_INCLUDED__
-#include<vector>
+#include <vector>
+#include <utility>
 
 /*
 * Class Traveler finds the shortest path through given points
@@ -26,8 +27,11 @@ public:
 
 	/*
 	* Iterates through the given points
+	* Returns the indexes and the best distance
+	* 
+	* @return std::pair<std::vector<int>,double> (indexes, bestDistance)
 	*/
-	std::vector<int> iterateThroughPoints();
+	std::pair<std::vector<int>, double> iterateThroughPoints();
 
 	/*
 	* Initialize class with points vector

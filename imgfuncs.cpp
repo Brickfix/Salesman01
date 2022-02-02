@@ -1,6 +1,6 @@
 #include "imgfuncs.h"
 #include <iostream>
-
+#include <deque>
 
 struct circleStuff {
     BLGradient circleRadial;
@@ -25,7 +25,7 @@ void saveBLImg(BLImage img, const char* name) {
     std::cout << "Successfully saved img as " << name << std::endl;
 }
 
-BLImage createImage(std::deque<int> points, int length, int pointRadius) {
+BLImage createImage(std::vector<int> points, int length, int pointRadius) {
     BLImage img(480, 480, BL_FORMAT_PRGB32);
     BLContext ctx(img);
 
@@ -105,12 +105,10 @@ BLImage createImage(std::deque<int> points, int length, int pointRadius) {
 /*
 * Draws a route along the provided points given by the indices 
 */
-void drawBestRoute(BLImage & img, std::deque<int> points, std::deque<int> indices) {
+void drawBestRoute(BLImage & img, std::vector<int> points, std::vector<int> indices, int firstPoint) {
     
-    int firstPoint;
-
-    firstPoint = indices[0];
-    indices.pop_front();
+    // firstPoint = indices[0];
+    // indices.pop_front();
 
     BLContext ctx(img);
     ctx.setStrokeStyle(BLRgba32(0, 200, 50, 255));

@@ -1,8 +1,9 @@
 #include<iostream>
 // #include<blend2d.h>
 // #include"blend2d.h"
-#include<deque>
-#include<string>
+#include <utility>
+#include <vector>
+#include <string>
 
 #include "Libraries/blend2d/src/blend2d.h"
 #include "imgfuncs.h"
@@ -11,7 +12,7 @@
 #include "Traveler.h"
 
 #define PRADIUS 20
-#define NPOINTS 11
+#define NPOINTS 13
 
 
 int main()
@@ -25,7 +26,9 @@ int main()
 
     DaBoss.createDistMat();
 
-    std::vector<int> bestIndexes = DaBoss.iterateThroughPoints();
+    std::pair<std::vector<int>,double> result = DaBoss.iterateThroughPoints();
+    std::vector<int> bestIndexes = result.first;
+    double bestDistance = result.second;
 
     std::vector<int>::iterator iter;
     std::cout << "Best indexes: 0";
@@ -35,27 +38,22 @@ int main()
     std::cout << std::endl;
 
 
-    // double distanceMat[NPOINTS * NPOINTS];
-
-    // fillDistanceMat(points, NPOINTS, distanceMat);
-    // std::deque<int> pointIndexes = bruteforce(points, NPOINTS, distanceMat);
-    // 
-    // BLImage img = createImage(points, points.size(), PRADIUS);
-    // 
-    // std::string pointsstring = std::to_string(NPOINTS);
-    // std::string name("_points.bmp");
-    // 
-    // name = pointsstring + name;
-    // 
-    // saveBLImg(img, name.c_str());
-    // 
-    // drawBestRoute(img, points, pointIndexes);
-    // 
-    // std::string drawName = ("_best_route.bmp");
-    // name = pointsstring + drawName;
-    // 
-    // saveBLImg(img, name.c_str());
-    // 
+    BLImage img = createImage(points, points.size(), PRADIUS);
+    
+    std::string pointsstring = std::to_string(NPOINTS);
+    std::string name("_points.bmp");
+    
+    name = pointsstring + name;
+    
+    saveBLImg(img, name.c_str());
+    
+    drawBestRoute(img, points, bestIndexes);
+    
+    std::string drawName = ("_best_route.bmp");
+    name = pointsstring + drawName;
+    
+    saveBLImg(img, name.c_str());
+    
     return 0;
 }
 

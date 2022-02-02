@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <limits>
+#include <time.h>
 
 double calcDist(int x0, int y0, int x1, int y1) {
 	double dist = sqrt(pow(x0 - x1, 2) + pow(y0 - y1, 2));
@@ -30,7 +31,7 @@ void Traveler::createDistMat() {
 	}
 }
 
-std::vector<int> Traveler::iterateThroughPoints() {
+std::pair<std::vector<int>, double> Traveler::iterateThroughPoints() {
 	
 	std::vector<int> indexes;
 	std::vector<int> bestIndexes;
@@ -42,6 +43,9 @@ std::vector<int> Traveler::iterateThroughPoints() {
 	for (int i = 1; i < nPoints; i++) {
 		indexes.push_back(i);
 	}
+
+	time_t start;
+	time(&start);
 
 	do {
 		int previousPointIndex = 0;
@@ -61,10 +65,13 @@ std::vector<int> Traveler::iterateThroughPoints() {
 		if (currentDist < bestDist) {
 			bestIndexes.assign(indexes.begin(), indexes.end());
 			bestDist = currentDist;
-			std::cout << "New Best dinstance :" << bestDist << std::endl;
+			std::cout << difftime(time(NULL), start) <<"s : New Best dinstance: " << bestDist << std::endl;
 		}
 
 	} while (std::next_permutation(indexes.begin(), indexes.end()));
 
-	return bestIndexes;
+	// clean up
+	indexes.~vector();
+
+	return std::pair<std::vector<int>, double> (bestIndexes,bestDist);
 }

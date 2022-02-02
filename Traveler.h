@@ -11,19 +11,9 @@ class Traveler
 {
 public:
 	/*
-	* Points to iterate through
-	*/
-	std::vector<int> points;
-
-	/*
 	* Distance Matrix between all points
 	*/
 	std::vector<double> distMat;
-
-	/*
-	* Creates a distance mat
-	*/
-	void createDistMat();
 
 	/*
 	* Iterates through the given points
@@ -40,6 +30,15 @@ public:
 	Traveler(std::vector<int> points);
 
 private:
+	/*
+	* Number of points
+	*/
+	int nPoints;
+
+	/*
+	* Creates a distance mat
+	*/
+	void createDistMat(std::vector<int> points);
 };
 
 #endif __TRAVELER_H_INCLUDED__

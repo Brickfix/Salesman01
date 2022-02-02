@@ -12,7 +12,7 @@
 #include "Traveler.h"
 
 #define PRADIUS 20
-#define NPOINTS 13
+#define NPOINTS 10
 
 
 int main()
@@ -23,8 +23,6 @@ int main()
     std::vector<int> points = createPoints(NPOINTS, 480);
 
     Traveler DaBoss(points);
-
-    DaBoss.createDistMat();
 
     std::pair<std::vector<int>,double> result = DaBoss.iterateThroughPoints();
     std::vector<int> bestIndexes = result.first;

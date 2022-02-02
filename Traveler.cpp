@@ -10,16 +10,21 @@ double calcDist(int x0, int y0, int x1, int y1) {
 	return dist;
 }
 
-Traveler::Traveler(std::vector<int> newPoints) {
-	points = newPoints;
+Traveler::Traveler(std::vector<int> points) {
+
+	if (nPoints % 2 != 0) {
+		throw "points must contain an even number of entries!";
+	}
+	
+	// init private values
+	nPoints = points.size() / 2;
+	distMat.resize(nPoints * nPoints);
+
+	createDistMat(points);
+
 }
 
-void Traveler::createDistMat() {
-	const int nPoints = points.size() / 2;
-
-	// force reset
-	distMat.clear();
-	distMat.resize(nPoints * nPoints);
+void Traveler::createDistMat(std::vector<int> points) {
 
 	for (int pInd0 = 0; pInd0 < nPoints; pInd0++) {
 		for (int pInd1 = nPoints - 1; pInd1 > pInd0; pInd1--) {
@@ -37,7 +42,7 @@ std::pair<std::vector<int>, double> Traveler::iterateThroughPoints() {
 	std::vector<int> bestIndexes;
 	double bestDist = std::numeric_limits<double>::max();
 
-	int nPoints = points.size()/2;
+	// int nPoints = points.size()/2;
 
 	// starting point is always fixed at index 0
 	for (int i = 1; i < nPoints; i++) {

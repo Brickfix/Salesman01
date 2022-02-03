@@ -4,6 +4,7 @@
 # folders
 /Debug
 /x64
+/packages
 /SalesmanTest/x64
 /Libraries/blend2d
 /.vs

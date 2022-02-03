@@ -14,7 +14,6 @@
 #define PRADIUS 20
 #define NPOINTS 10
 
-
 int main()
 {
 

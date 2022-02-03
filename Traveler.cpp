@@ -4,20 +4,32 @@
 #include <algorithm>
 #include <limits>
 #include <time.h>
+#include <exception>
 
 double calcDist(int x0, int y0, int x1, int y1) {
 	double dist = sqrt(pow(x0 - x1, 2) + pow(y0 - y1, 2));
 	return dist;
 }
 
+
 Traveler::Traveler(std::vector<int> points) {
 
-	if (nPoints % 2 != 0) {
-		throw "points must contain an even number of entries!";
+	int inputSize = points.size();
+
+	// Handling exceptions
+	if (inputSize == 0) {
+
+		throw std::invalid_argument( "points may not be empty" );
+	}
+	else if (inputSize % 2 != 0) {
+		throw std::invalid_argument(" points must contain an even number of entries, one for x and one for y coordinate" );
+	}
+	else if (inputSize <= 6) {
+		throw std::invalid_argument(" there exists no fastest combination for three or fewer points" );
 	}
 	
 	// init private values
-	nPoints = points.size() / 2;
+	nPoints = inputSize / 2;
 	distMat.resize(nPoints * nPoints);
 
 	createDistMat(points);

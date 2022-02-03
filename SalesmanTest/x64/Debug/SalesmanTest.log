@@ -1,0 +1,7 @@
+﻿  TravelerTest.cpp
+C:\Users\loese\source\repos\Salesman01\SalesmanTest\TravelerTest.cpp(63,2): warning C4244: 'argument': conversion from 'double' to 'RawType', possible loss of data
+          with
+          [
+              RawType=float
+          ]
+  SalesmanTest.vcxproj -> C:\Users\loese\source\repos\Salesman01\x64\Debug\SalesmanTest.lib

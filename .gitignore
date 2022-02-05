@@ -12,3 +12,6 @@
 # libraries
 *.dll
 *.lib
+
+# logs
+*.tlog

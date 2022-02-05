@@ -19,6 +19,20 @@ TEST(TravelerTest, TestsInputs) {
 	ASSERT_THROW({ Traveler invalid(noInputs); }, std::invalid_argument);
 	ASSERT_THROW({ Traveler invalid(toFewInputs); }, std::invalid_argument);
 	ASSERT_THROW({ Traveler invalid(unevenInputs); }, std::invalid_argument);
+
+}
+
+TEST(TravelerTest, TestDefaults) {
+	int pointsArr[] = { 50,  50,  50,  100, 100, 100, 100, 50 };
+	std::vector<int> points(pointsArr, pointsArr + sizeof(pointsArr) / sizeof(int));
+
+	Traveler defaultTestTraveler(points);
+
+	EXPECT_FALSE(defaultTestTraveler.searched) << "Search flag must be false if no search was conducted";
+	EXPECT_EQ(0, defaultTestTraveler.bestPathIndizes.size()) << "BestPathIndizes vector must be empty without search";
+
+	// other defaults must not really be tested
+	ASSERT_EQ(-1, defaultTestTraveler.timeToFindBest) << "timeToFindBest must be -1 if no best path search was yet conducted";
 }
 
 /*
@@ -36,9 +50,12 @@ TEST(TravelerTest, TestsOutputs) {
 	std::vector<int> points(pointsArr, pointsArr + sizeof(pointsArr) / sizeof(int));
 
 	Traveler fourPoints(points);
-	std::pair<std::vector<int>, double> results = fourPoints.iterateThroughPoints();
-	std::vector<int> indexes = results.first;
-	double distance = results.second;
+	fourPoints.iterateThroughPoints();
+
+	EXPECT_TRUE(fourPoints.searched) << "Searched flag not set to true";
+
+	std::vector<int> indexes = fourPoints.bestPathIndizes;
+	double distance = fourPoints.bestDist;
 
 	bool matches = false;
 	int validIndexes0[] = { 1, 2, 3 };
@@ -60,5 +77,11 @@ TEST(TravelerTest, TestsOutputs) {
 	ASSERT_TRUE(matches) << "Result indexes did not match expectation";
 
 	double expectedDist = 200.0;
-	ASSERT_FLOAT_EQ(expectedDist, distance) << "Result distance was not as expected";
+	ASSERT_DOUBLE_EQ(expectedDist, distance) << "Result distance was not as expected";
+}
+
+
+int main(int argc, char** argv) {
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
 }

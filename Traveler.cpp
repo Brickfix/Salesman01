@@ -6,15 +6,9 @@
 #include <time.h>
 #include <exception>
 
-double calcDist(int x0, int y0, int x1, int y1) {
-	double dist = sqrt(pow(x0 - x1, 2) + pow(y0 - y1, 2));
-	return dist;
-}
+Traveler::Traveler(std::vector<int> inputPoints) {
 
-
-Traveler::Traveler(std::vector<int> points) {
-
-	int inputSize = points.size();
+	int inputSize = inputPoints.size();
 
 	// Handling exceptions
 	if (inputSize == 0) {
@@ -30,13 +24,28 @@ Traveler::Traveler(std::vector<int> points) {
 	
 	// init private values
 	nPoints = inputSize / 2;
-	distMat.resize(nPoints * nPoints);
+	points = inputPoints;
 
-	createDistMat(points);
+	// set results to defaults
+	bestDist = std::numeric_limits<double>::max();
+	timeToFinish = -1;
+	timeToFindBest = -1;
+	bestPathIndizes.clear();
+	searched = false;
+
 
 }
 
-void Traveler::createDistMat(std::vector<int> points) {
+double Traveler::calcDist(int x0, int y0, int x1, int y1) {
+	double dist = sqrt(pow(x0 - x1, 2) + pow(y0 - y1, 2));
+	return dist;
+}
+
+
+std::vector<double> Traveler::createDistMat(std::vector<int> points) {
+
+	std::vector<double> distMat;
+	distMat.resize(nPoints * nPoints);
 
 	for (int pInd0 = 0; pInd0 < nPoints; pInd0++) {
 		for (int pInd1 = nPoints - 1; pInd1 > pInd0; pInd1--) {
@@ -46,23 +55,25 @@ void Traveler::createDistMat(std::vector<int> points) {
 			distMat[nPoints * pInd1 + pInd0] = distance;
 		}
 	}
+
+	return distMat;
 }
 
-std::pair<std::vector<int>, double> Traveler::iterateThroughPoints() {
+void Traveler::iterateThroughPoints() {
 	
 	std::vector<int> indexes;
 	std::vector<int> bestIndexes;
-	double bestDist = std::numeric_limits<double>::max();
+	
+	// init timing
+	time_t start;
+	time(&start);
 
-	// int nPoints = points.size()/2;
+	std::vector<double> distMat = createDistMat(points);
 
 	// starting point is always fixed at index 0
 	for (int i = 1; i < nPoints; i++) {
 		indexes.push_back(i);
 	}
-
-	time_t start;
-	time(&start);
 
 	do {
 		int previousPointIndex = 0;
@@ -80,15 +91,21 @@ std::pair<std::vector<int>, double> Traveler::iterateThroughPoints() {
 		currentDist += distMat[previousPointIndex * nPoints + 0];
 
 		if (currentDist < bestDist) {
-			bestIndexes.assign(indexes.begin(), indexes.end());
+			bestPathIndizes.assign(indexes.begin(), indexes.end());
 			bestDist = currentDist;
-			std::cout << difftime(time(NULL), start) <<"s : New Best dinstance: " << bestDist << std::endl;
+
+			timeToFindBest = difftime(time(NULL), start);
+
+			// std::cout << difftime(time(NULL), start) <<"s : New Best dinstance: " << bestDist << std::endl;
 		}
 
 	} while (std::next_permutation(indexes.begin(), indexes.end()));
 
+	searched = true;
+	timeToFinish = difftime(time(NULL), start);
+
 	// clean up
 	indexes.~vector();
-
-	return std::pair<std::vector<int>, double> (bestIndexes,bestDist);
+	distMat.~vector();
+	
 }

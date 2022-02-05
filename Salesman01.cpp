@@ -12,7 +12,7 @@
 #include "Traveler.h"
 
 #define PRADIUS 20
-#define NPOINTS 10
+#define NPOINTS 12
 
 int main()
 {
@@ -23,9 +23,10 @@ int main()
 
     Traveler DaBoss(points);
 
-    std::pair<std::vector<int>,double> result = DaBoss.iterateThroughPoints();
-    std::vector<int> bestIndexes = result.first;
-    double bestDistance = result.second;
+    DaBoss.iterateThroughPoints();
+
+    std::vector<int> bestIndexes = DaBoss.bestPathIndizes;
+    double bestDistance = DaBoss.bestDist;
 
     std::vector<int>::iterator iter;
     std::cout << "Best indexes: 0";
@@ -33,6 +34,8 @@ int main()
         std::cout << ", " << * iter;
     }
     std::cout << std::endl;
+    std::cout << "Best solution found after: " << DaBoss.timeToFindBest << "s" << std::endl;
+    std::cout << "Total time to permutate all: " << DaBoss.timeToFinish << "s" << std::endl;
 
 
     BLImage img = createImage(points, points.size(), PRADIUS);

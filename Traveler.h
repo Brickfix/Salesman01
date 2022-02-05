@@ -10,24 +10,31 @@
 class Traveler
 {
 public:
-	/*
-	* Distance Matrix between all points
-	*/
-	std::vector<double> distMat;
 
 	/*
 	* Iterates through the given points
 	* Returns the indexes and the best distance
-	* 
-	* @return std::pair<std::vector<int>,double> (indexes, bestDistance)
 	*/
-	std::pair<std::vector<int>, double> iterateThroughPoints();
+	void iterateThroughPoints();
 
 	/*
 	* Initialize class with points vector
 	* @param points: vector containing points
 	*/
-	Traveler(std::vector<int> points);
+	Traveler(std::vector<int> inputPoints);
+
+	// Restuls
+
+	/* Length of shortest distance */
+	double bestDist;
+	/* Time total to finish search algorithm */
+	double timeToFinish;
+	/* Time to find shortest path */
+	double timeToFindBest;
+	/* Indizes of shortest path (not including starting point index 0) */
+	std::vector<int> bestPathIndizes;
+	/* true if executed a path searching algorithm else false */
+	bool searched;
 
 private:
 	/*
@@ -36,9 +43,20 @@ private:
 	int nPoints;
 
 	/*
+	* Points
+	*/
+	std::vector<int> points;
+
+	/*
 	* Creates a distance mat
 	*/
-	void createDistMat(std::vector<int> points);
+	std::vector<double> createDistMat(std::vector<int> points);
+
+
+	/*
+	* Calculates the difference between two points
+	*/
+	double calcDist(int x0, int y0, int x1, int y1);
 };
 
 #endif __TRAVELER_H_INCLUDED__

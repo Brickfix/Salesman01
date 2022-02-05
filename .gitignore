@@ -5,13 +5,15 @@
 /Debug
 /x64
 /packages
-/SalesmanTest/x64
+/SalesmanTest/x64/Debug
 /Libraries/blend2d
 /.vs
 
 # libraries
 *.dll
 *.lib
+*.obj
 
 # logs
 *.tlog
+*.log

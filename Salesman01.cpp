@@ -12,7 +12,7 @@
 #include "Traveler.h"
 
 #define PRADIUS 20
-#define NPOINTS 12
+#define NPOINTS 10
 
 int main()
 {
@@ -25,8 +25,8 @@ int main()
 
     DaBoss.iterateThroughPoints();
 
-    std::vector<int> bestIndexes = DaBoss.bestPathIndizes;
-    double bestDistance = DaBoss.bestDist;
+    std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
+    double bestDistance = DaBoss.getBestDist();
 
     std::vector<int>::iterator iter;
     std::cout << "Best indexes: 0";
@@ -34,8 +34,25 @@ int main()
         std::cout << ", " << * iter;
     }
     std::cout << std::endl;
-    std::cout << "Best solution found after: " << DaBoss.timeToFindBest << "s" << std::endl;
-    std::cout << "Total time to permutate all: " << DaBoss.timeToFinish << "s" << std::endl;
+    std::cout << "Shortest distance is: " << bestDistance << std::endl;
+    std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest() << "s" << std::endl;
+    std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
+
+    DaBoss.reset();
+
+    DaBoss.permutateHalf();
+
+    bestIndexes = DaBoss.getBestPathIndizes();
+    bestDistance = DaBoss.getBestDist();
+
+    std::cout << "Best indexes: 0";
+    for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
+        std::cout << ", " << *iter;
+    }
+    std::cout << std::endl;
+    std::cout << "Shortest distance is: " << bestDistance << std::endl;
+    std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest()<< "s" << std::endl;
+    std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
 
 
     BLImage img = createImage(points, points.size(), PRADIUS);

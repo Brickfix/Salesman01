@@ -18,13 +18,46 @@ public:
 	void iterateThroughPoints();
 
 	/*
+	* Permutates only half of the point while
+	* respecting that backwards paths don't add
+	* any new information, left-round or right-round
+	* should be identical
+	*/
+	void permutateHalf();
+
+	/*
 	* Initialize class with points vector
-	* @param points: vector containing points
+	* @param points: pointer to vector containing points
 	*/
 	Traveler(std::vector<int> inputPoints);
 
+
+	/*
+	* Resets the result field variables
+	* Good for comparing different iteration/permutation methods
+	*/
+	void reset();
+
 	// Restuls
 
+	/* returns the best distance */
+	double getBestDist() { return bestDist; };
+
+	/* returns time to finish */
+	double getTimeToFinish() { return timeToFinish; };
+
+	/* returns time to find best path */
+	double getTimeToFindBest() { return timeToFindBest; };
+
+	/* returns vector containing best path indizes */
+	std::vector<int> getBestPathIndizes() { return bestPathIndizes; };
+
+	/* returns if best path method has already been run */
+	bool hasSearched() { return searched; };
+
+private:
+	/* Number of points */
+	int nPoints;
 	/* Length of shortest distance */
 	double bestDist;
 	/* Time total to finish search algorithm */
@@ -36,12 +69,6 @@ public:
 	/* true if executed a path searching algorithm else false */
 	bool searched;
 
-private:
-	/*
-	* Number of points
-	*/
-	int nPoints;
-
 	/*
 	* Points
 	*/
@@ -51,7 +78,6 @@ private:
 	* Creates a distance mat
 	*/
 	std::vector<double> createDistMat(std::vector<int> points);
-
 
 	/*
 	* Calculates the difference between two points

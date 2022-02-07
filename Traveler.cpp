@@ -6,6 +6,7 @@
 #include <time.h>
 #include <exception>
 
+
 Traveler::Traveler(std::vector<int> inputPoints) {
 
 	int inputSize = inputPoints.size();
@@ -27,13 +28,15 @@ Traveler::Traveler(std::vector<int> inputPoints) {
 	points = inputPoints;
 
 	// set results to defaults
+	reset();
+}
+
+void Traveler::reset() {
 	bestDist = std::numeric_limits<double>::max();
 	timeToFinish = -1;
 	timeToFindBest = -1;
 	bestPathIndizes.clear();
 	searched = false;
-
-
 }
 
 double Traveler::calcDist(int x0, int y0, int x1, int y1) {
@@ -60,6 +63,10 @@ std::vector<double> Traveler::createDistMat(std::vector<int> points) {
 }
 
 void Traveler::iterateThroughPoints() {
+
+	if (searched) {
+		throw std::runtime_error("Reset before running new permutation run");
+	}
 	
 	std::vector<int> indexes;
 	std::vector<int> bestIndexes;
@@ -96,7 +103,8 @@ void Traveler::iterateThroughPoints() {
 
 			timeToFindBest = difftime(time(NULL), start);
 
-			// std::cout << difftime(time(NULL), start) <<"s : New Best dinstance: " << bestDist << std::endl;
+			// this costs a lot of time
+			// std::cout << timeToFindBest <<"s : New Best dinstance: " << bestDist << std::endl;
 		}
 
 	} while (std::next_permutation(indexes.begin(), indexes.end()));
@@ -108,4 +116,61 @@ void Traveler::iterateThroughPoints() {
 	indexes.~vector();
 	distMat.~vector();
 	
+}
+
+void Traveler::permutateHalf() {
+
+	if (searched) {
+		throw std::runtime_error("Reset before running new permutation run");
+	}
+
+
+	std::vector<int> indexes;
+	std::vector<int> bestIndexes;
+
+	// init timing
+	time_t start;
+	time(&start);
+
+	std::vector<double> distMat = createDistMat(points);
+
+	// starting point is always fixed at index 0
+	for (int i = 1; i < nPoints; i++) {
+		indexes.push_back(i);
+	}
+
+	do {
+		int previousPointIndex = 0;
+		double currentDist = 0;
+		
+		if (indexes.back() > indexes.front()) {
+			for (std::vector<int>::iterator indexIter = indexes.begin(); indexIter != indexes.end(); ++indexIter) {
+
+				currentDist += distMat[previousPointIndex * nPoints + *indexIter];
+
+				// update previous point
+				previousPointIndex = *indexIter;
+			}
+
+			// distance back to last point
+			currentDist += distMat[previousPointIndex * nPoints + 0];
+
+			if (currentDist < bestDist) {
+				bestPathIndizes.assign(indexes.begin(), indexes.end());
+				bestDist = currentDist;
+
+				timeToFindBest = difftime(time(NULL), start);
+
+				// std::cout << difftime(time(NULL), start) <<"s : New Best dinstance: " << bestDist << std::endl;
+			}
+		}
+
+	} while (std::next_permutation(indexes.begin(), indexes.end()));
+
+	searched = true;
+	timeToFinish = difftime(time(NULL), start);
+
+	// clean up
+	indexes.~vector();
+	distMat.~vector();
 }

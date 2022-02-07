@@ -28,11 +28,11 @@ TEST(TravelerTest, TestDefaults) {
 
 	Traveler defaultTestTraveler(points);
 
-	EXPECT_FALSE(defaultTestTraveler.searched) << "Search flag must be false if no search was conducted";
-	EXPECT_EQ(0, defaultTestTraveler.bestPathIndizes.size()) << "BestPathIndizes vector must be empty without search";
+	EXPECT_FALSE(defaultTestTraveler.hasSearched()) << "Search flag must be false if no search was conducted";
+	EXPECT_EQ(0, defaultTestTraveler.getBestPathIndizes().size()) << "BestPathIndizes vector must be empty without search";
 
 	// other defaults must not really be tested
-	ASSERT_EQ(-1, defaultTestTraveler.timeToFindBest) << "timeToFindBest must be -1 if no best path search was yet conducted";
+	ASSERT_EQ(-1, defaultTestTraveler.getTimeToFindBest()) << "timeToFindBest must be -1 if no best path search was yet conducted";
 }
 
 /*
@@ -52,10 +52,10 @@ TEST(TravelerTest, TestsOutputs) {
 	Traveler fourPoints(points);
 	fourPoints.iterateThroughPoints();
 
-	EXPECT_TRUE(fourPoints.searched) << "Searched flag not set to true";
+	EXPECT_TRUE(fourPoints.hasSearched()) << "Searched flag not set to true";
 
-	std::vector<int> indexes = fourPoints.bestPathIndizes;
-	double distance = fourPoints.bestDist;
+	std::vector<int> indexes = fourPoints.getBestPathIndizes();
+	double distance = fourPoints.getBestDist();
 
 	bool matches = false;
 	int validIndexes0[] = { 1, 2, 3 };
@@ -78,6 +78,33 @@ TEST(TravelerTest, TestsOutputs) {
 
 	double expectedDist = 200.0;
 	ASSERT_DOUBLE_EQ(expectedDist, distance) << "Result distance was not as expected";
+
+	// reset for quicker alternative
+	fourPoints.reset();
+	matches = false;
+	validCount0 = 0;
+	validCount1 = 0;
+
+	// make sure Traveler class has correctly reset
+	ASSERT_FALSE(fourPoints.hasSearched());
+	ASSERT_NE(fourPoints.getBestDist(), distance);
+
+	fourPoints.permutateHalf();
+
+	indexes = fourPoints.getBestPathIndizes();
+
+	// only validIndexesO should have been searched
+	for (int j = 0; j < 3; j++) {
+		if (indexes[j] == validIndexes0[j]) {
+			validCount0++;
+		}
+		else if (indexes[j] == validIndexes1[j]) {
+			validCount1++;
+		}
+	}
+
+	ASSERT_EQ(3, validCount0);
+	ASSERT_NE(3, validCount1);
 }
 
 

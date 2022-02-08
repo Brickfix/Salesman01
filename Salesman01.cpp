@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 #include <string>
+#include <exception>
 
 #include "Libraries/blend2d/src/blend2d.h"
 #include "imgfuncs.h"
@@ -11,15 +12,53 @@
 // #include "pathcalcs.h"
 #include "Traveler.h"
 
-#define PRADIUS 20
-#define NPOINTS 10
-
-int main()
+int main(int argc, char* argv[])
 {
 
-    // int points[10] = { 100, 100, 300, 300, 150, 400, 50, 300, 350, 50 };
-    // std::deque<int> points = { 100, 100, 300, 300, 150, 400, 50, 300, 350, 50 };
-    std::vector<int> points = createPoints(NPOINTS, 480);
+    int pointsTotal = 10;
+    int imgSize = 480;
+    bool randPoints = true;
+    std::vector<int> points;
+
+    for (int i = 1; i < argc; i++) {
+        if (std::string(argv[i]) == "--points") {
+            if (i + 1 < argc) {
+                pointsTotal = std::stoi(argv[i + 1]);
+                // No need to iterate over the command input again
+                i++;
+            }
+            else {
+                throw std::runtime_error("--points requires input");
+            }
+        }
+        else if (std::string(argv[i]) == "--size") {
+            if (i + 1 < argc) {
+                imgSize = std::stoi(argv[i + 1]);
+                i++;
+            }
+            else {
+                throw std::runtime_error("--size requires input");
+            }
+        }
+        else if (std::string(argv[i]) == "--inputPoints") {
+            randPoints = false;
+            if (i + 1 < argc) {
+                pointsTotal = std::stoi(argv[i + 1]);
+                i++;
+            }
+        }
+    }
+
+    if (randPoints) {
+        points = createPoints(pointsTotal, imgSize);
+    }
+    else {
+        for (int p = 0; p < 2 * pointsTotal; p++) {
+            int nextPointCoord;
+            std::cin >> nextPointCoord;
+            points.push_back(nextPointCoord);
+        }
+    }
 
     Traveler DaBoss(points);
 
@@ -28,7 +67,7 @@ int main()
     std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
     double bestDistance = DaBoss.getBestDist();
 
-    std::vector<int>::iterator iter;
+    /*std::vector<int>::iterator iter;
     std::cout << "Best indexes: 0";
     for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
         std::cout << ", " << * iter;
@@ -38,26 +77,29 @@ int main()
     std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest() << "s" << std::endl;
     std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
 
-    DaBoss.reset();
+    DaBoss.reset();*/
 
     DaBoss.permutateHalf();
 
     bestIndexes = DaBoss.getBestPathIndizes();
     bestDistance = DaBoss.getBestDist();
 
-    std::cout << "Best indexes: 0";
+    std::vector<int>::iterator iter;
+    std::cout << /*"Best indexes: 0"*/ 0;
     for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
-        std::cout << ", " << *iter;
+        std::cout << /*", " <<*/ *iter;
     }
     std::cout << std::endl;
+    /*
     std::cout << "Shortest distance is: " << bestDistance << std::endl;
     std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest()<< "s" << std::endl;
     std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
 
 
-    BLImage img = createImage(points, points.size(), PRADIUS);
+    int pointRadius = 20;
+    BLImage img = createImage(points, points.size(), pointRadius);
     
-    std::string pointsstring = std::to_string(NPOINTS);
+    std::string pointsstring = std::to_string(pointsTotal);
     std::string name("_points.bmp");
     
     name = pointsstring + name;
@@ -70,7 +112,7 @@ int main()
     name = pointsstring + drawName;
     
     saveBLImg(img, name.c_str());
-    
+    */
     return 0;
 }
 

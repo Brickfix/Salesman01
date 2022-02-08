@@ -13,6 +13,7 @@
 *.dll
 *.lib
 *.obj
+*.exe
 
 # logs
 *.tlog

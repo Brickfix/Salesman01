@@ -111,10 +111,6 @@ void Traveler::iterateThroughPoints() {
 
 	searched = true;
 	timeToFinish = difftime(time(NULL), start);
-
-	// clean up
-	indexes.~vector();
-	distMat.~vector();
 	
 }
 
@@ -169,8 +165,4 @@ void Traveler::permutateHalf() {
 
 	searched = true;
 	timeToFinish = difftime(time(NULL), start);
-
-	// clean up
-	indexes.~vector();
-	distMat.~vector();
 }

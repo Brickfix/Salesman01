@@ -85,4 +85,4 @@ private:
 	double calcDist(int x0, int y0, int x1, int y1);
 };
 
-#endif __TRAVELER_H_INCLUDED__
+#endif //__TRAVELER_H_INCLUDED__

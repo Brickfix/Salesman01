@@ -6,8 +6,8 @@
 #include <string>
 #include <exception>
 
-#include "Libraries/blend2d/src/blend2d.h"
-#include "imgfuncs.h"
+// #include "Libraries/blend2d/src/blend2d.h"
+// #include "imgfuncs.h"
 #include "pointgeneration.h"
 // #include "pathcalcs.h"
 #include "Traveler.h"
@@ -62,12 +62,13 @@ int main(int argc, char* argv[])
 
     Traveler DaBoss(points);
 
-    DaBoss.iterateThroughPoints();
+    // DaBoss.iterateThroughPoints();
 
+    /*
     std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
     double bestDistance = DaBoss.getBestDist();
 
-    /*std::vector<int>::iterator iter;
+    std::vector<int>::iterator iter;
     std::cout << "Best indexes: 0";
     for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
         std::cout << ", " << * iter;
@@ -81,15 +82,24 @@ int main(int argc, char* argv[])
 
     DaBoss.permutateHalf();
 
-    bestIndexes = DaBoss.getBestPathIndizes();
-    bestDistance = DaBoss.getBestDist();
+    std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
+    double bestDistance = DaBoss.getBestDist();
 
     std::vector<int>::iterator iter;
-    std::cout << /*"Best indexes: 0"*/ 0;
+    std::cout << /*"Best indexes: 0"*/ 0 << std::endl;
     for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
-        std::cout << /*", " <<*/ *iter;
+        std::cout << /*", " <<*/ *iter << std::endl;
     }
-    std::cout << std::endl;
+
+    std::vector<int>::iterator pointIter;
+    for (pointIter = points.begin(); pointIter != points.end(); pointIter++){
+        std::cout << *pointIter << std::endl;
+    }
+
+    std::cout << DaBoss.getBestDist() << std::endl;
+    std::cout << DaBoss.getTimeToFindBest() << std::endl;
+    std::cout << DaBoss.getTimeToFinish() << std::endl;
+    // std::cout << std::endl;
     /*
     std::cout << "Shortest distance is: " << bestDistance << std::endl;
     std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest()<< "s" << std::endl;

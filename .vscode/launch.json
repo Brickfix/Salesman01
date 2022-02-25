@@ -12,13 +12,22 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Python: GUI_test",
+            "type": "python",
+            "request": "launch",
+            "program": "gui_builder.py",
+            "console": "integratedTerminal"
+        },
+        {
             "name": "g++.exe - Aktive Datei erstellen und debuggen",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [
-                "--points",
-                "11"
+                //"--points",
+                //"11"
+                //"--inputPoints",
+                //"4"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",

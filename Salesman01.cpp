@@ -18,6 +18,7 @@ int main(int argc, char* argv[])
     int pointsTotal = 10;
     int imgSize = 480;
     bool randPoints = true;
+    int seed = 711;
     std::vector<int> points;
 
     for (int i = 1; i < argc; i++) {
@@ -47,10 +48,16 @@ int main(int argc, char* argv[])
                 i++;
             }
         }
+        else if (std::string(argv[i]) == "--seed") {
+            if (i+1 < argc) {
+                seed = std::stoi(argv[i+1]);
+                i++;
+            }
+        }
     }
 
     if (randPoints) {
-        points = createPoints(pointsTotal, imgSize);
+        points = createPoints(pointsTotal, points, imgSize, seed);
     }
     else {
         for (int p = 0; p < 2 * pointsTotal; p++) {

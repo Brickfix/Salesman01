@@ -1,28 +1,37 @@
 #include "pointgeneration.h"
 
-std::vector<int> createPoints(int const nPoints, int const imgPixels, int const padding, int const minPointDist) {
+#include <random>
+#include <cmath>
+
+std::vector<int> createPoints(
+                                int nPoints,
+                                std::vector<int> & points,
+                                int const imgPixels,
+                                int const seed,
+                                int const padding,
+                                int const minPointDist) {
 
     // Range of allowed coordinates
     int pointRange = imgPixels - 2 * padding;
 
-    // init deque where coords are stored
-    std::vector<int> points;
-
     std::default_random_engine randy;
-    randy.seed(0711);
+    randy.seed(seed);
 
     // coordinate generator
     std::uniform_int_distribution<int> dist(0, pointRange);
 
     // first point needs no check, must be created beforehand to prevent deadlock
-    points.push_back(padding + dist(randy));
-    points.push_back(padding + dist(randy));
+    if(points.size()==0){
+        points.push_back(padding + dist(randy));
+        points.push_back(padding + dist(randy));
+        nPoints--;
+    }
 
     // Debug counter
     // int totalGeneratedPointCounter = 1;
 
     // Following generation loop gets increasingly costly at high point numbers, but is fine for now at as total desired points is rather low
-    for (int p = 0; p < nPoints - 1; ) {
+    for (int p = 0; p < nPoints; ) {
 
         // must be true to store new point
         bool isValidPoint = true;

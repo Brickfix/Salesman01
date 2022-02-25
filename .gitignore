@@ -8,6 +8,7 @@
 /SalesmanTest/x64/Debug
 /Libraries/blend2d
 /.vs
+/.vscode
 
 # libraries
 *.dll

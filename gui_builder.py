@@ -1,6 +1,4 @@
-from distutils import command
 from tkinter import *
-from tkinter import ttk
 
 from typing import Sequence
 import numpy as np
@@ -148,19 +146,26 @@ class SalesGUI:
 
         amount_label = Label(self.random_points_frame, text="Set Amount")
         amount_label.grid(column=0, row=2, sticky=W)
-        amount_input = Entry(self.random_points_frame)
-        amount_input.grid(column=1, row=2, sticky=W)
+        self.amount_input = Entry(self.random_points_frame)
+        self.amount_input.grid(column=1, row=2, sticky=W)
 
         seed_label = Label(self.random_points_frame, text="Seed")
         seed_label.grid(column=0, row=3, sticky=W)
-        seed_input = Entry(self.random_points_frame)
-        seed_input.grid(column=1, row=3, sticky=W)
+        self.seed_input = Entry(self.random_points_frame)
+        self.seed_input.grid(column=1, row=3, sticky=W)
 
     def rand_mode_change(self):
         print(self.random_mode.get())
     
     def points_mode_change(self):
-        print(self.mode_var.get())
+        '''
+        Gets called when the mode is switched between
+        random point mode and custom set points mode
+        
+        '''
+        if self.mode_var.get() == self.POINT_MODE_CUSTOM:
+            print(self.mode_var.get())
+
 
     def add_button_click(self):
         if self.add_point_on:
@@ -209,16 +214,8 @@ class SalesGUI:
 
         if self.remove_point_on:
             self.canvas.bind("<Button-1>", self.remove_point)
-
-
-    def add_point(self):
-        self.n_points += 1
-
-        _, _, _, self.indizes, self.points = run_salesman_exe(self.n_points, self.canvas_size)
-
-        self.clear_canvas()
-
-        self.draw_path_and_points()
+        elif self.add_point_on:
+            self.canvas.bind("<Button-1>", self.draw_point)
 
     def draw_point(self, event):
         '''
@@ -320,11 +317,40 @@ class SalesGUI:
         Runs the salesman exe once on custom point configuration
         '''
 
-        _, _, _, self.indizes, self.points = run_salesman_exe(
-                                                        points=None,
-                                                        img_size=self.canvas_size,
-                                                        input_points=self.points)
 
+        if self.mode_var.get() == self.POINT_MODE_CUSTOM:
+            input_args = dict(
+                new_points=0,
+                img_size=self.canvas_size,
+                input_points=self.points
+            )
+        elif self.mode_var.get() == self.POINT_MODE_RANDOM:
+            
+            p = int(self.amount_input.get())
+
+            if self.random_mode.get() == self.RANDOM_MODE_ADD:
+                # add additional specified points
+                input_points = self.points
+            elif self.random_mode.get() == self.RANDOM_MODE_REGEN:
+                # replace existing points
+                input_points = []
+            else:
+                raise RuntimeError(f"Invalid random mode {self.random_mode.get()}")
+            
+            input_args = dict(
+                new_points=p,
+                img_size=self.canvas_size,
+                input_points=input_points
+            )
+            if len(self.seed_input.get()) > 0:
+                input_args['seed'] = self.seed_input.get()
+
+        else:
+            raise RuntimeError(f"Invalid mode {self.mode_var.get()}")
+        
+        _, _, _, self.indizes, self.points = run_salesman_exe(**input_args)
+
+        self.clear_canvas()
         self.draw_path_and_points()
 
     def run_random(self):

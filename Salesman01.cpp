@@ -15,7 +15,8 @@
 int main(int argc, char* argv[])
 {
 
-    int pointsTotal = 10;
+    int nPointsGenerated = 10;
+    int nPointsInput = 0;
     int imgSize = 480;
     bool randPoints = true;
     int seed = 711;
@@ -24,7 +25,7 @@ int main(int argc, char* argv[])
     for (int i = 1; i < argc; i++) {
         if (std::string(argv[i]) == "--points") {
             if (i + 1 < argc) {
-                pointsTotal = std::stoi(argv[i + 1]);
+                nPointsGenerated = std::stoi(argv[i + 1]);
                 // No need to iterate over the command input again
                 i++;
             }
@@ -42,9 +43,8 @@ int main(int argc, char* argv[])
             }
         }
         else if (std::string(argv[i]) == "--inputPoints") {
-            randPoints = false;
             if (i + 1 < argc) {
-                pointsTotal = std::stoi(argv[i + 1]);
+                nPointsInput = std::stoi(argv[i + 1]);
                 i++;
             }
         }
@@ -56,16 +56,16 @@ int main(int argc, char* argv[])
         }
     }
 
-    if (randPoints) {
-        points = createPoints(pointsTotal, points, imgSize, seed);
+
+    for (int p = 0; p < 2 * nPointsInput; p++) {
+        int nextPointCoord;
+        std::cin >> nextPointCoord;
+        points.push_back(nextPointCoord);
     }
-    else {
-        for (int p = 0; p < 2 * pointsTotal; p++) {
-            int nextPointCoord;
-            std::cin >> nextPointCoord;
-            points.push_back(nextPointCoord);
-        }
+    if (nPointsGenerated > 0){
+        createPoints(nPointsGenerated, points, imgSize, seed);
     }
+
 
     Traveler DaBoss(points);
 

@@ -156,7 +156,7 @@ def run_salesman_exe(
     '''
 
     real_path = os.path.realpath(exe_name)
-    commands, run_cin_loop, n_points_input = command_list(new_points, img_size, input_points, seed)
+    commands, run_cin_loop, n_points_input = command_list(new_points, input_points, img_size, seed)
 
     sales_call = Popen([real_path, *commands], stdout=PIPE, stdin = PIPE)
 

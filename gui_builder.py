@@ -14,6 +14,9 @@ class SalesGUI:
     points: list
     canvas_points: list = []
     n_points: int
+    time_total: float
+    time_best: float
+    min_distance: float
 
     #### constant strings to prevent typos
     # Mode of point selection/generation
@@ -70,6 +73,10 @@ class SalesGUI:
         self.create_frame_custom(containFrame)
         self.create_frame_random(containFrame)
 
+        # Information about run
+        self.create_frame_info(containFrame)
+
+        # create canvas once
         self.clear_canvas()
 
         exit_button = Button(self.window, text="Exit", command=self.window.destroy)
@@ -93,7 +100,7 @@ class SalesGUI:
         Creates a Frame with widgets for custom points
         '''
         self.custom_points_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
-        self.custom_points_frame.grid(column=0, row=0, sticky=NW, pady=5)
+        self.custom_points_frame.grid(column=0, row=0, sticky=[NW, E], pady=5)
 
         custom_points_select = Radiobutton(self.custom_points_frame,
                             variable=self.mode_var, value=self.POINT_MODE_CUSTOM, text="Custom Points",
@@ -153,6 +160,38 @@ class SalesGUI:
         seed_label.grid(column=0, row=3, sticky=W)
         self.seed_input = Entry(self.random_points_frame)
         self.seed_input.grid(column=1, row=3, sticky=W)
+
+    def create_frame_info(self, master):
+        '''
+        creates the frame containing information about the last run
+        '''
+
+        info_frame = Frame(master, bd=2, relief=GROOVE ,padx=5, pady=5)
+        info_frame.grid(column=0, row=3, sticky=[NW, E])
+
+        distance_info_label = Label(info_frame, text="Minimum Distance")
+        distance_info_label.grid(column=0, row=0, sticky=W)
+
+        distance_label = Label(info_frame)
+        self.distance_str = StringVar(distance_label, str(self.min_distance))
+        distance_label.configure(textvariable=self.distance_str)
+        distance_label.grid(column=1, row=0, sticky=W)
+
+        total_time_info_label = Label(info_frame, text="Total time for calculation:")
+        total_time_info_label.grid(column=0, row=1, sticky=W)
+
+        total_time_label = Label(info_frame)
+        self.total_time_str = StringVar(total_time_label, str(self.time_total))
+        total_time_label.configure(textvariable=self.total_time_str)
+        total_time_label.grid(column=1, row=1, sticky=W)
+
+        best_time_info_label = Label(info_frame, text="Time until best:")
+        best_time_info_label.grid(column=0, row=2, sticky=W)
+
+        best_time_label = Label(info_frame)
+        self.best_time_str = StringVar(best_time_label, str(self.time_best))
+        best_time_label.configure(textvariable=self.best_time_str)
+        best_time_label.grid(column=1, row=2, sticky=W)
 
     def rand_mode_change(self):
         print(self.random_mode.get())
@@ -348,7 +387,12 @@ class SalesGUI:
         else:
             raise RuntimeError(f"Invalid mode {self.mode_var.get()}")
         
-        _, _, _, self.indizes, self.points = run_salesman_exe(**input_args)
+        self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
+            run_salesman_exe(**input_args)
+
+        self.total_time_str.set(str(self.time_total))
+        self.best_time_str.set(str(self.time_best))
+        self.distance_str.set(str(self.min_distance))
 
         self.clear_canvas()
         self.draw_path_and_points()
@@ -359,7 +403,8 @@ class SalesGUI:
         
         '''
 
-        _, _, _, self.indizes, self.points = run_salesman_exe(self.n_points, self.canvas_size)
+        self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
+            run_salesman_exe(self.n_points, self.canvas_size)
         
     def show(self):
 

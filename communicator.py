@@ -56,15 +56,23 @@ def command_list(
         n_points_input_float = len(input_points)/2
         # check if input is even
         # as input must contain x and y coords
-        if(n_points_input%1 != 0):
+        if(n_points_input_float%1 != 0):
             raise RuntimeError(f"length of inputs_points must be even, was {n_points_input_float}")
         
         n_points_input = int(n_points_input_float)
-
+        
         commands.append("--inputPoints")
         commands.append(str(n_points_input))
         # set to true to run loop
         run_cin_loop = True
+
+    # check if total is enough points for path finding algorithm (4 or more)
+    enough_points = n_points_input + new_points >= 4 if new_points is not None else n_points_input >= 4
+    if not enough_points:
+        if not (new_points is None and len(input_points)==0):
+            raise RuntimeError(
+                f"Input requires a total of 4 or more points, provided {n_points_input} plus {new_points} to generate")
+
 
     if img_size is not None:
         if img_size <= 0:

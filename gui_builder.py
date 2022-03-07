@@ -12,7 +12,6 @@ class SalesGUI:
     radius: int
     indizes: Sequence
     points: list
-    canvas_points: list = []
     n_points: int
     time_total: float
     time_best: float
@@ -50,7 +49,7 @@ class SalesGUI:
         self.canvas_size = canvas_size
 
         # run salesman exe once
-        self.run_random()
+        self.run_default()
 
         # build the actual gui
         self.window = Tk()
@@ -129,7 +128,7 @@ class SalesGUI:
         Creates a Frame with windgets for random points
         '''
         self.random_points_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
-        self.random_points_frame.grid(column=0, row=1, sticky=NW, pady=5)
+        self.random_points_frame.grid(column=0, row=1, sticky=[NW, E], pady=5)
 
         random_points_select = Radiobutton(self.random_points_frame,
                                 variable=self.mode_var, value=self.POINT_MODE_RANDOM, text="Random Points",
@@ -192,6 +191,14 @@ class SalesGUI:
         self.best_time_str = StringVar(best_time_label, str(self.time_best))
         best_time_label.configure(textvariable=self.best_time_str)
         best_time_label.grid(column=1, row=2, sticky=W)
+
+        warning_info_label = Label(info_frame, text="WARNING:")
+        warning_info_label.grid(column=0, row=3, sticky=W)
+
+        warning_label = Label(info_frame)
+        self.warning_str = StringVar(warning_label, "")
+        warning_label.configure(textvariable=self.warning_str)
+        warning_label.grid(column=1, row=3, sticky=W)
 
     def rand_mode_change(self):
         print(self.random_mode.get())
@@ -274,6 +281,8 @@ class SalesGUI:
 
         self.canvas.create_oval(coordinates, fill="blue")
 
+        self.n_points += 1
+
 
     def remove_point(self, event):
         '''
@@ -308,6 +317,8 @@ class SalesGUI:
         self.clear_canvas()
         self.draw_points()
 
+        self.n_points -=1
+
     def draw_points(self):
         '''
         draws the points
@@ -325,7 +336,7 @@ class SalesGUI:
 
     def draw_path_and_points(self):
         '''
-        draws the path 
+        draws the path and points
         '''
         # start_point = points[indizes[0]], points[indizes[0]+1]
         # for index in indizes[1:]:
@@ -374,7 +385,9 @@ class SalesGUI:
                 # replace existing points
                 input_points = []
             else:
-                raise RuntimeError(f"Invalid random mode {self.random_mode.get()}")
+                msg = f"Invalid random mode {self.random_mode.get()}"
+                self.warning_str.set(msg)
+                raise RuntimeError(msg)
             
             input_args = dict(
                 new_points=p,
@@ -385,10 +398,19 @@ class SalesGUI:
                 input_args['seed'] = self.seed_input.get()
 
         else:
-            raise RuntimeError(f"Invalid mode {self.mode_var.get()}")
+            msg = f"Invalid mode {self.mode_var.get()}"
+            self.warning_str.set(msg)
+            raise RuntimeError()
         
-        self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
-            run_salesman_exe(**input_args)
+        try:
+            self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
+                run_salesman_exe(**input_args)
+        except RuntimeError as e:
+            self.warning_str.set(e.args[0])
+            return
+
+
+        self.n_points = int(len(self.points)/2)
 
         self.total_time_str.set(str(self.time_total))
         self.best_time_str.set(str(self.time_best))
@@ -397,7 +419,9 @@ class SalesGUI:
         self.clear_canvas()
         self.draw_path_and_points()
 
-    def run_random(self):
+        self.warning_str.set("")
+
+    def run_default(self):
         '''
         Runs the salesman exe once on random point configuration
         

@@ -28,8 +28,8 @@ class SalesGUI:
     CUSTOM_MODE_ADD="addPoint"
     CUSTOM_MODE_REMOVE="removePoint"
 
-    # options
-    option_list = ["Permutate All", "Permutate Half", "GeneratePoints"]
+    # options                                                           CAREFULL: GeneratePoints must be last!
+    option_list = ["Permutate All", "Permutate Half", "ClosestNextPoint", "GeneratePoints"]
 
     def __init__(
                 self,

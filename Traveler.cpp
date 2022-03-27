@@ -188,14 +188,14 @@ void Traveler::takeClosestPoint() {
 		int currentBestNextIndex;
 
 		for (int j = 1; j < nPoints; j++) {
-			if (std::find(bestPathIndizes.begin(), bestPathIndizes.end(), j) != bestPathIndizes.end()) {
-				j++;
-			}
-			double distance = distMat[indexLastPushed * nPoints + j];
+			// check if j is not already a point in bestPathIndizes
+			if (std::find(bestPathIndizes.begin(), bestPathIndizes.end(), j) == bestPathIndizes.end()) {
+				double distance = distMat[indexLastPushed * nPoints + j];
 
-			if (distance < bestDistanceToNext) {
-				bestDistanceToNext = distance;
-				currentBestNextIndex = j;
+				if (distance < bestDistanceToNext) {
+					bestDistanceToNext = distance;
+					currentBestNextIndex = j;
+				}	
 			}
 		}
 

@@ -26,6 +26,12 @@ public:
 	void permutateHalf();
 
 	/*
+	* Takes the next point based on the closest point
+	*/
+	void takeClosestPoint();
+
+
+	/*
 	* Initialize class with points vector
 	* @param points: pointer to vector containing points
 	*/

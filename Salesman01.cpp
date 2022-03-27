@@ -84,8 +84,8 @@ int main(int argc, char* argv[])
     if(mode==0){
         Traveler Permutator(points);
         Permutator.iterateThroughPoints();
-        bestIndexes = Permutator.getBestPathIndizes();
 
+        bestIndexes = Permutator.getBestPathIndizes();
         minDistance = Permutator.getBestDist();
         timeToBest = Permutator.getTimeToFindBest();
         timeToFinish = Permutator.getTimeToFinish();
@@ -93,11 +93,20 @@ int main(int argc, char* argv[])
     else if(mode==1){
         Traveler Permutator(points);
         Permutator.permutateHalf();
-        bestIndexes = Permutator.getBestPathIndizes();
 
+        bestIndexes = Permutator.getBestPathIndizes();
         minDistance = Permutator.getBestDist();
         timeToBest = Permutator.getTimeToFindBest();
         timeToFinish = Permutator.getTimeToFinish();
+    }
+    else if (mode == 2) {
+        Traveler Shortest(points);
+        Shortest.takeClosestPoint();
+        
+        bestIndexes = Shortest.getBestPathIndizes();
+        minDistance = Shortest.getBestDist();
+        timeToBest = Shortest.getTimeToFindBest();
+        timeToFinish = Shortest.getTimeToFinish();
     }
 
     std::vector<int>::iterator iter;

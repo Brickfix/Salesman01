@@ -166,3 +166,49 @@ void Traveler::permutateHalf() {
 	searched = true;
 	timeToFinish = difftime(time(NULL), start);
 }
+
+void Traveler::takeClosestPoint() {
+	if (searched) {
+		throw std::runtime_error("Reset before running new permutation run");
+	}
+
+	std::vector<int> indices;
+
+	// init timing
+	time_t start;
+	time(&start);
+
+	std::vector<double> distMat = createDistMat(points);
+
+	// starting at point index 0, later set to last pushed into indices
+	int indexLastPushed = 0;
+	bestDist = 0;
+
+	for (int i = 1; i < nPoints; i++) {
+
+		double bestDistanceToNext = std::numeric_limits<double>::max();
+		int currentBestNextIndex;
+
+		for (int j = 1; j < nPoints; j++) {
+			if (std::find(indices.begin(), indices.end(), j) != indices.end()) {
+				j++;
+			}
+			double distance = distMat[indexLastPushed * nPoints + j];
+
+			if (distance < bestDistanceToNext) {
+				bestDistanceToNext = distance;
+				currentBestNextIndex = j;
+			}
+		}
+
+		indices.push_back(currentBestNextIndex);
+		indexLastPushed = currentBestNextIndex;
+		bestDist += bestDistanceToNext;
+	}
+
+	bestDist += distMat[indexLastPushed]; // distMat[startPoint*nPoints + indexLastPushed] == distMat[0+indexLastPushed] == distMat[indexLastPushed]
+	
+	// best path is total path time
+	timeToFinish = difftime(time(NULL), start);
+	timeToFindBest = timeToFinish;
+}

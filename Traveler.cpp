@@ -172,8 +172,6 @@ void Traveler::takeClosestPoint() {
 		throw std::runtime_error("Reset before running new permutation run");
 	}
 
-	std::vector<int> indices;
-
 	// init timing
 	time_t start;
 	time(&start);
@@ -190,7 +188,7 @@ void Traveler::takeClosestPoint() {
 		int currentBestNextIndex;
 
 		for (int j = 1; j < nPoints; j++) {
-			if (std::find(indices.begin(), indices.end(), j) != indices.end()) {
+			if (std::find(bestPathIndizes.begin(), bestPathIndizes.end(), j) != bestPathIndizes.end()) {
 				j++;
 			}
 			double distance = distMat[indexLastPushed * nPoints + j];
@@ -201,13 +199,13 @@ void Traveler::takeClosestPoint() {
 			}
 		}
 
-		indices.push_back(currentBestNextIndex);
+		bestPathIndizes.push_back(currentBestNextIndex);
 		indexLastPushed = currentBestNextIndex;
 		bestDist += bestDistanceToNext;
 	}
 
 	bestDist += distMat[indexLastPushed]; // distMat[startPoint*nPoints + indexLastPushed] == distMat[0+indexLastPushed] == distMat[indexLastPushed]
-	
+
 	// best path is total path time
 	timeToFinish = difftime(time(NULL), start);
 	timeToFindBest = timeToFinish;

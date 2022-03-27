@@ -28,6 +28,9 @@ class SalesGUI:
     CUSTOM_MODE_ADD="addPoint"
     CUSTOM_MODE_REMOVE="removePoint"
 
+    # options
+    option_list = ["Permutate All", "Permutate Half", "GeneratePoints"]
+
     def __init__(
                 self,
                 n_points: int,
@@ -71,6 +74,9 @@ class SalesGUI:
         self.mode_var = StringVar()
         self.create_frame_custom(containFrame)
         self.create_frame_random(containFrame)
+        
+        # Select program to exectue
+        self.create_frame_program(containFrame)
 
         # Information about run
         self.create_frame_info(containFrame)
@@ -159,6 +165,22 @@ class SalesGUI:
         seed_label.grid(column=0, row=3, sticky=W)
         self.seed_input = Entry(self.random_points_frame)
         self.seed_input.grid(column=1, row=3, sticky=W)
+
+    def create_frame_program(self, master):
+        '''
+        creates a frame where the desired program option can be selected
+        '''
+        
+        program_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
+        program_frame.grid(column=0, row=2, sticky=[NW, E])
+
+        program_label = Label(program_frame, text="Program:")
+        program_label.grid(column=0, row=0, sticky=W)
+        
+        self.option = StringVar()
+        self.option.set(self.option_list[0])
+        options_menu = OptionMenu(program_frame, self.option, *self.option_list)
+        options_menu.grid(column=1, row=0, sticky=W)
 
     def create_frame_info(self, master):
         '''
@@ -367,7 +389,8 @@ class SalesGUI:
         Runs the salesman exe once on custom point configuration
         '''
 
-
+        # The way input arguments are generated here could definitly be cleaned up, 
+        # but hey it works
         if self.mode_var.get() == self.POINT_MODE_CUSTOM:
             input_args = dict(
                 new_points=0,
@@ -402,6 +425,8 @@ class SalesGUI:
             self.warning_str.set(msg)
             raise RuntimeError()
         
+        input_args['mode'] = self.option_list.index(self.option.get())
+
         try:
             self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
                 run_salesman_exe(**input_args)
@@ -428,7 +453,7 @@ class SalesGUI:
         '''
 
         self.time_total, self.time_best, self.min_distance, self.indizes, self.points = \
-            run_salesman_exe(self.n_points, self.canvas_size)
+            run_salesman_exe(self.n_points, self.canvas_size, mode=-1)
         
     def show(self):
 
@@ -436,5 +461,5 @@ class SalesGUI:
 
 
 if __name__ == "__main__":
-    gui = SalesGUI(n_points = 9, canvas_size = 400)
+    gui = SalesGUI(n_points = 10, canvas_size = 500)
     gui.show()

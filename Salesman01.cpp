@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
     int imgSize = 480;
     bool randPoints = true;
     int seed = 711;
+    int mode = 0;
     std::vector<int> points;
 
     for (int i = 1; i < argc; i++) {
@@ -54,9 +55,15 @@ int main(int argc, char* argv[])
                 i++;
             }
         }
+        else if (std::string(argv[i]) == "--mode") {
+            if (i+1 < argc) {
+                mode = std::stoi(argv[i+1]);
+                i++;
+            }
+        }
     }
 
-
+    // read in and/or generate points
     for (int p = 0; p < 2 * nPointsInput; p++) {
         int nextPointCoord;
         std::cin >> nextPointCoord;
@@ -66,31 +73,32 @@ int main(int argc, char* argv[])
         createPoints(nPointsGenerated, points, imgSize, seed);
     }
 
+    // Declare and initialize outputs
+    std::vector<int> bestIndexes;
+    for(int i=1; i<points.size()/2; i++) bestIndexes.push_back(i);
 
-    Traveler DaBoss(points);
+    double minDistance = 0;
+    double timeToBest = 0;
+    double timeToFinish = 0;
 
-    // DaBoss.iterateThroughPoints();
+    if(mode==0){
+        Traveler Permutator(points);
+        Permutator.iterateThroughPoints();
+        bestIndexes = Permutator.getBestPathIndizes();
 
-    /*
-    std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
-    double bestDistance = DaBoss.getBestDist();
-
-    std::vector<int>::iterator iter;
-    std::cout << "Best indexes: 0";
-    for (iter = bestIndexes.begin(); iter != bestIndexes.end(); iter++) {
-        std::cout << ", " << * iter;
+        minDistance = Permutator.getBestDist();
+        timeToBest = Permutator.getTimeToFindBest();
+        timeToFinish = Permutator.getTimeToFinish();
     }
-    std::cout << std::endl;
-    std::cout << "Shortest distance is: " << bestDistance << std::endl;
-    std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest() << "s" << std::endl;
-    std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
+    else if(mode==1){
+        Traveler Permutator(points);
+        Permutator.permutateHalf();
+        bestIndexes = Permutator.getBestPathIndizes();
 
-    DaBoss.reset();*/
-
-    DaBoss.permutateHalf();
-
-    std::vector<int> bestIndexes = DaBoss.getBestPathIndizes();
-    double bestDistance = DaBoss.getBestDist();
+        minDistance = Permutator.getBestDist();
+        timeToBest = Permutator.getTimeToFindBest();
+        timeToFinish = Permutator.getTimeToFinish();
+    }
 
     std::vector<int>::iterator iter;
     std::cout << /*"Best indexes: 0"*/ 0 << std::endl;
@@ -103,9 +111,9 @@ int main(int argc, char* argv[])
         std::cout << *pointIter << std::endl;
     }
 
-    std::cout << DaBoss.getBestDist() << std::endl;
-    std::cout << DaBoss.getTimeToFindBest() << std::endl;
-    std::cout << DaBoss.getTimeToFinish() << std::endl;
+    std::cout << minDistance << std::endl;
+    std::cout << timeToBest << std::endl;
+    std::cout << timeToFinish << std::endl;
     // std::cout << std::endl;
     /*
     std::cout << "Shortest distance is: " << bestDistance << std::endl;

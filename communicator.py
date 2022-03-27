@@ -6,7 +6,8 @@ def command_list(
                 new_points: Union[int, None],
                 input_points: list,
                 img_size: Union[int, None],
-                seed: Union[str, None]) -> Tuple[list, bool, int]:
+                seed: Union[str, None],
+                mode: Union[int, None]) -> Tuple[list, bool, int]:
     '''
     creates the command list
     faciliates testing
@@ -28,6 +29,9 @@ def command_list(
 
     seed: str
         seed to initialize random number generation
+
+    mode: int
+        Mode to execute .exe in
 
     Returns:
     --------
@@ -83,6 +87,10 @@ def command_list(
     if seed is not None:
         commands.append("--seed")
         commands.append(seed)
+    
+    if mode is not None:
+        commands.append("--mode")
+        commands.append(str(mode))
 
     return commands, run_cin_loop, n_points_input
 
@@ -127,6 +135,7 @@ def run_salesman_exe(
             img_size: Union[int, None] = None,
             input_points: list = [],
             seed: str = "711",
+            mode: int = 0,
             exe_name: str = "Salesman01.exe",) -> Tuple[
                                                 float,
                                                 float,
@@ -138,14 +147,8 @@ def run_salesman_exe(
     
     Parameters
     ----------
-    new_points: int or None
-        How many new points shall be generated. If None, default in c++ code will be used
-    img_size: int or None
-        Set size of Image. If None, default  in c++ will be used
-    input_points: list
-        List containing points. Must be even amount of entries representing x and y coordinates
-    seed: int, default = 711
-        Seed to initialize random number generator
+    commands: list
+        list of strings containing the desired commands
     exe_name: str
         name of the executable for path calculations
 
@@ -164,7 +167,7 @@ def run_salesman_exe(
     '''
 
     real_path = os.path.realpath(exe_name)
-    commands, run_cin_loop, n_points_input = command_list(new_points, input_points, img_size, seed)
+    commands, run_cin_loop, n_points_input = command_list(new_points, input_points, img_size, seed, mode)
 
     sales_call = Popen([real_path, *commands], stdout=PIPE, stdin = PIPE)
 

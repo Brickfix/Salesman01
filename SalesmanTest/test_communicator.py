@@ -13,7 +13,8 @@ class TestCommunicator(TestCase):
             new_points=None,
             input_points=[100, 50, 75, 200],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         with self.assertRaises(RuntimeError):
             command_list(**input_dict)
@@ -22,7 +23,8 @@ class TestCommunicator(TestCase):
             new_points=3,
             input_points=[],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         with self.assertRaises(RuntimeError):
             command_list(**input_dict)
@@ -32,7 +34,8 @@ class TestCommunicator(TestCase):
             new_points=None,
             input_points=[100, 50, 75, 200, 350, 100, 100, 25, 85],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         with self.assertRaises(RuntimeError):
             command_list(**input_dict)
@@ -42,7 +45,8 @@ class TestCommunicator(TestCase):
             new_points=-5,
             input_points=[],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         with self.assertRaises(RuntimeError):
             command_list(**input_dict)
@@ -51,7 +55,8 @@ class TestCommunicator(TestCase):
             new_points=None,
             input_points=[],
             img_size=-200,
-            seed=None
+            seed=None,
+            mode=None
         )
         with self.assertRaises(RuntimeError):
             command_list(**input_dict)
@@ -67,7 +72,8 @@ class TestCommunicator(TestCase):
             new_points=None,
             input_points=[],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         commands, cin_loop, n_points_input = command_list(**input_dict)
         self.assertEqual(len(commands), 0)
@@ -79,7 +85,8 @@ class TestCommunicator(TestCase):
             new_points=None,
             input_points=[10, 10, 20, 20, 30, 30, 40, 40, 50, 50],
             img_size=None,
-            seed=None
+            seed=None,
+            mode=None
         )
         commands, cin_loop, n_points_input = command_list(**input_dict)
         self.assertEqual(len(commands), 2)
@@ -91,7 +98,8 @@ class TestCommunicator(TestCase):
             new_points=4,
             input_points=[10, 10, 20, 20, 30, 30, 40, 40, 50, 50],
             img_size=300,
-            seed=1234
+            seed=1234,
+            mode=None
         )
         commands, cin_loop, n_points_input = command_list(**input_dict)
         self.assertEqual(len(commands), 8)

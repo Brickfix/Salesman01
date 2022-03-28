@@ -153,16 +153,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BruteForce.cpp" />
     <ClCompile Include="imgfuncs.cpp" />
     <ClCompile Include="pathcalcs.cpp" />
     <ClCompile Include="pointgeneration.cpp" />
     <ClCompile Include="Salesman01.cpp" />
+    <ClCompile Include="Shortest.cpp" />
     <ClCompile Include="Traveler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BruteForce.h" />
     <ClInclude Include="imgfuncs.h" />
     <ClInclude Include="pathcalcs.h" />
     <ClInclude Include="pointgeneration.h" />
+    <ClInclude Include="Shortest.h" />
     <ClInclude Include="Traveler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

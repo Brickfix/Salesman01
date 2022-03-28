@@ -55,3 +55,4 @@ void Shortest::takeClosestPoint() {
 	// best path is total path time
 	timeToFinish = difftime(time(NULL), start);
 	timeToFindBest = timeToFinish;
+}

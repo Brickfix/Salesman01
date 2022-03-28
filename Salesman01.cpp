@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
     double timeToFinish = 0;
 
     if(mode==0){
-        Traveler Permutator = BruteForce(points);
+        BruteForce Permutator = BruteForce(points);
         Permutator.iterateThroughPoints();
 
         bestIndexes = Permutator.getBestPathIndizes();
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
         timeToFinish = Permutator.getTimeToFinish();
     }
     else if(mode==1){
-        Traveler Permutator = BruteForce(points);
+        BruteForce Permutator = BruteForce(points);
         Permutator.permutateHalf();
 
         bestIndexes = Permutator.getBestPathIndizes();
@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
         timeToFinish = Permutator.getTimeToFinish();
     }
     else if (mode == 2) {
-        Traveler traveler = Shortest(points);
+        Shortest traveler = Shortest(points);
         traveler.takeClosestPoint();
         
         bestIndexes = traveler.getBestPathIndizes();

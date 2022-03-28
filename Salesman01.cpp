@@ -11,6 +11,8 @@
 #include "pointgeneration.h"
 // #include "pathcalcs.h"
 #include "Traveler.h"
+#include "BruteForce.h"
+#include "Shortest.h"
 
 int main(int argc, char* argv[])
 {
@@ -82,7 +84,7 @@ int main(int argc, char* argv[])
     double timeToFinish = 0;
 
     if(mode==0){
-        Traveler Permutator(points);
+        Traveler Permutator = BruteForce(points);
         Permutator.iterateThroughPoints();
 
         bestIndexes = Permutator.getBestPathIndizes();
@@ -91,7 +93,7 @@ int main(int argc, char* argv[])
         timeToFinish = Permutator.getTimeToFinish();
     }
     else if(mode==1){
-        Traveler Permutator(points);
+        Traveler Permutator = BruteForce(points);
         Permutator.permutateHalf();
 
         bestIndexes = Permutator.getBestPathIndizes();
@@ -100,13 +102,13 @@ int main(int argc, char* argv[])
         timeToFinish = Permutator.getTimeToFinish();
     }
     else if (mode == 2) {
-        Traveler Shortest(points);
-        Shortest.takeClosestPoint();
+        Traveler traveler = Shortest(points);
+        traveler.takeClosestPoint();
         
-        bestIndexes = Shortest.getBestPathIndizes();
-        minDistance = Shortest.getBestDist();
-        timeToBest = Shortest.getTimeToFindBest();
-        timeToFinish = Shortest.getTimeToFinish();
+        bestIndexes = traveler.getBestPathIndizes();
+        minDistance = traveler.getBestDist();
+        timeToBest = traveler.getTimeToFindBest();
+        timeToFinish = traveler.getTimeToFinish();
     }
 
     std::vector<int>::iterator iter;

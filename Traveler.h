@@ -30,6 +30,11 @@ public:
 	*/
 	void takeClosestPoint();
 
+	/*
+	* Takes the shortest point, while not crossing
+	* paths with already discovered closest points
+	*/
+	void closestPointNoCross();
 
 	/*
 	* Initialize class with points vector
@@ -37,6 +42,8 @@ public:
 	*/
 	Traveler(std::vector<int> inputPoints);
 
+	// remove default constructor
+	Traveler() = delete;
 
 	/*
 	* Resets the result field variables
@@ -61,7 +68,7 @@ public:
 	/* returns if best path method has already been run */
 	bool hasSearched() { return searched; };
 
-private:
+protected:
 	/* Number of points */
 	int nPoints;
 	/* Length of shortest distance */

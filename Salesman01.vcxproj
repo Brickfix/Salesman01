@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClCompile Include="BruteForce.cpp" />
     <ClCompile Include="imgfuncs.cpp" />
+    <ClCompile Include="NoCross.cpp" />
     <ClCompile Include="pathcalcs.cpp" />
     <ClCompile Include="pointgeneration.cpp" />
     <ClCompile Include="Salesman01.cpp" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="BruteForce.h" />
     <ClInclude Include="imgfuncs.h" />
+    <ClInclude Include="NoCross.h" />
     <ClInclude Include="pathcalcs.h" />
     <ClInclude Include="pointgeneration.h" />
     <ClInclude Include="Shortest.h" />

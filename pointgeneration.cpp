@@ -2,6 +2,7 @@
 
 #include <random>
 #include <cmath>
+#include <stdexcept>
 
 std::vector<int> createPoints(
                                 int nPoints,
@@ -27,8 +28,8 @@ std::vector<int> createPoints(
         nPoints--;
     }
 
-    // Debug counter
-    // int totalGeneratedPointCounter = 1;
+    // Counter to catch endless loop
+    int maxFailedGenerations = 100;
 
     // Following generation loop gets increasingly costly at high point numbers, but is fine for now at as total desired points is rather low
     for (int p = 0; p < nPoints; ) {
@@ -60,6 +61,13 @@ std::vector<int> createPoints(
             points.push_back(newX);
             points.push_back(newY);
             p++;
+        }
+        else {
+            maxFailedGenerations--;
+        }
+
+        if (maxFailedGenerations == 0) {
+            throw std::invalid_argument("To many Failed attempts to generate point, reduce nr of points or rerun with bigger canvas");
         }
     }
 

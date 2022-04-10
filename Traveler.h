@@ -43,6 +43,11 @@ public:
 	/* returns if best path method has already been run */
 	bool hasSearched() { return searched; };
 
+	/*
+	* Calculates the difference between two points
+	*/
+	static double calcDist(int x0, int y0, int x1, int y1);
+
 protected:
 	/* Number of points */
 	int nPoints;
@@ -67,10 +72,6 @@ protected:
 	*/
 	std::vector<double> createDistMat(std::vector<int> points);
 
-	/*
-	* Calculates the difference between two points
-	*/
-	double calcDist(int x0, int y0, int x1, int y1);
 };
 
 #endif //__TRAVELER_H_INCLUDED__

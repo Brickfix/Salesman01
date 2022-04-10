@@ -13,6 +13,7 @@
 #include "Traveler.h"
 #include "BruteForce.h"
 #include "Shortest.h"
+#include "NoCross.h"
 
 int main(int argc, char* argv[])
 {
@@ -109,6 +110,15 @@ int main(int argc, char* argv[])
         minDistance = traveler.getBestDist();
         timeToBest = traveler.getTimeToFindBest();
         timeToFinish = traveler.getTimeToFinish();
+    }
+    else if (mode == 3) {
+        NoCross crossOut = NoCross(points);
+        crossOut.NextPointNoCross();
+
+        bestIndexes = crossOut.getBestPathIndizes();
+        minDistance = crossOut.getBestDist();
+        timeToBest = crossOut.getTimeToFindBest();
+        timeToFinish = crossOut.getTimeToFinish();
     }
 
     std::vector<int>::iterator iter;

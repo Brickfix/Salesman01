@@ -190,8 +190,8 @@ void NoCross::NextPointNoCross(){
 		
 		indexes_visited.insert(currentBestNextIndex);
 
-		Point p1 = Point(points[indexLastPushed], points[indexLastPushed+1], indexLastPushed);
-		Point p2 = Point(points[currentBestNextIndex], points[currentBestNextIndex+1], currentBestNextIndex);
+		Point p1 = Point(points[indexLastPushed*2], points[indexLastPushed*2+1], indexLastPushed);
+		Point p2 = Point(points[currentBestNextIndex*2], points[currentBestNextIndex*2+1], currentBestNextIndex);
 
 		indexToEdge.emplace(indexLastPushed, Edge(p1, p2));
 

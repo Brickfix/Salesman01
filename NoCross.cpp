@@ -12,85 +12,68 @@
 #include <unordered_map>
 #include <stack>
 
-class Point
-{
-public:
-	int x;
-	int y;
-	int index;
 
-	// empty point
-	Point() {
-		this->x = 0;
-		this->y = 0;
-		this->index = -1;
-	}
+// empty point
+Point::Point() {
+	this->x = 0;
+	this->y = 0;
+	this->index = -1;
+}
 	
-	Point(int x, int y, int index) {
-		this->x = x;
-		this->y = y;
-		this->index = index;
-	}
+Point::Point(int x, int y, int index) {
+	this->x = x;
+	this->y = y;
+	this->index = index;
+}
 
-	// Thanks to stackexchange user @cdahms for pointing out how this works
+// Thanks to stackexchange user @cdahms for pointing out how this works
 
-	// operators for sets and unordered sets
-	bool operator==(const Point& pointToCompare) const {
-		return this->index == pointToCompare.index;
-	}
+// operators for sets and unordered sets
+bool Point::operator==(const Point& pointToCompare) const {
+	return this->index == pointToCompare.index;
+}
 
-	bool operator<(const Point& pointToCompare) const {
-		return this->index < pointToCompare.index;
-	}
+bool Point::operator<(const Point& pointToCompare) const {
+	return this->index < pointToCompare.index;
+}
 
 	// hash function for maps etc
-	struct HashFunction
-	{
-		size_t operator()(const Point& point) const {
-			size_t hash = std::hash<int>()(point.index);
-			return hash;
-		}
-	};
+struct Point::HashFunction
+{
+	size_t operator()(const Point& point) const {
+		size_t hash = std::hash<int>()(point.index);
+		return hash;
+	}
 };
 
-class Edge
-{
-
-public:
-	Point p1;
-	Point p2;
-
-	Edge(Point p1, Point p2) {
-		this->p1 = p1;
-		this->p2 = p2;
-	}
-
-	std::string toString() {
-
-		std::ostringstream ss;
-		ss << p1.index;
-		ss << "->";
-		ss << p2.index;
 
 
-		return ss.str();
-	}
 
-	bool operator==(const Edge& edge) const {
-		return (this->p1 == edge.p1 && this->p2 == edge.p2) || (this->p1 == edge.p2 && this->p2 == edge.p1);
-	}
+Edge::Edge(Point p1, Point p2) {
+	this->p1 = p1;
+	this->p2 = p2;
+}
 
-	// for set, set orders it for us
-	bool operator<(const Edge& edge) const {
-		return this->p1 < edge.p1;
-	}
+std::string Edge::toString() {
 
-	/* check if the edge intersetcs with another edge
-	* 
-	* @param edge
-	* @return bool
-	*/
-	bool intersects(const Edge& edge) {
+	std::ostringstream ss;
+	ss << p1.index;
+	ss << "->";
+	ss << p2.index;
+
+
+	return ss.str();
+}
+
+bool Edge::operator==(const Edge& edge) const {
+	return (this->p1 == edge.p1 && this->p2 == edge.p2) || (this->p1 == edge.p2 && this->p2 == edge.p1);
+}
+
+bool Edge::operator<(const Edge& edge) const {
+	return this->p1 < edge.p1;
+}
+
+bool Edge::intersects(const Edge& edge) {
 
 		// check that points don't match
 		if (this->p1.index == edge.p1.index || this->p1.index == edge.p2.index || this->p2.index == edge.p1.index || this->p2.index == edge.p2.index) return false;
@@ -124,51 +107,38 @@ public:
 			return true;
 		}
 		else return false;
-
 	}
 
-	void reverse() {
 
-		Point tmp = p1;
-		p1 = p2;
-		p2 = tmp;
+void Edge::reverse() {
 
-		// return Edge(p2, p1);
+	Point tmp = p1;
+	p1 = p2;
+	p2 = tmp;
+}
+
+struct Edge::HashFunction
+{
+	size_t operator()(const Edge& edge) const {
+		size_t hash1 = std::hash<int>()(edge.p1.index);
+		size_t hash2 = std::hash<int>()(edge.p2.index);
+		return hash1 ^ hash2;
 	}
-
-	struct HashFunction
-	{
-		size_t operator()(const Edge& edge) const {
-			size_t hash1 = std::hash<int>()(edge.p1.index);
-			size_t hash2 = std::hash<int>()(edge.p2.index);
-			return hash1 ^ hash2;
-		}
-	};
 };
+
 
 
 NoCross::NoCross(std::vector<int> inputPoints) : Traveler(inputPoints) {
 
 }
 
-void NoCross::NextPointNoCross(){
-	if (searched) {
-		throw std::runtime_error("Reset before running new permutation run");
-	}
-
-	// init timing
-	time_t start;
-	time(&start);
-
-	std::vector<double> distMat = createDistMat(points);
+void NoCross::shortestPathIndizes(std::vector<double> & distMat, std::unordered_map<int, Edge>& indexToEdge) {
 
 	// starting at point index 0, later set to last pushed into indices
 	int indexLastPushed = 0;
-	bestDist = 0;
 
-	std::unordered_set < Point, Point::HashFunction > pointsVisited;
 	std::set<int> indexes_visited;
-	std::unordered_map<int, Edge> indexToEdge;
+	// std::unordered_map<int, Edge> indexToEdge;
 
 	for (int i = 1; i < nPoints; i++) {
 
@@ -178,7 +148,7 @@ void NoCross::NextPointNoCross(){
 		for (int j = 1; j < nPoints; j++) {
 			// check if j is not already a point in bestPathIndizes
 			// if (std::find(bestPathIndizes.begin(), bestPathIndizes.end(), j) == bestPathIndizes.end()) { // linear(size) complexity
-			if(indexes_visited.find(j) == indexes_visited.end()) { // log(size) complexity
+			if (indexes_visited.find(j) == indexes_visited.end()) { // log(size) complexity
 				double distance = distMat[indexLastPushed * nPoints + j];
 
 				if (distance < bestDistanceToNext) {
@@ -187,11 +157,11 @@ void NoCross::NextPointNoCross(){
 				}
 			}
 		}
-		
+
 		indexes_visited.insert(currentBestNextIndex);
 
-		Point p1 = Point(points[indexLastPushed*2], points[indexLastPushed*2+1], indexLastPushed);
-		Point p2 = Point(points[currentBestNextIndex*2], points[currentBestNextIndex*2+1], currentBestNextIndex);
+		Point p1 = Point(points[indexLastPushed * 2], points[indexLastPushed * 2 + 1], indexLastPushed);
+		Point p2 = Point(points[currentBestNextIndex * 2], points[currentBestNextIndex * 2 + 1], currentBestNextIndex);
 
 		indexToEdge.emplace(indexLastPushed, Edge(p1, p2));
 
@@ -207,78 +177,85 @@ void NoCross::NextPointNoCross(){
 
 
 	bestDist += distMat[indexLastPushed]; // distMat[startPoint*nPoints + indexLastPushed] == distMat[0+indexLastPushed] == distMat[indexLastPushed]
+}
+
+void NoCross::iterateOverPath(std::unordered_map<int, Edge>& indexToEdge) {
+
+	bool crossing;
+	do {
+		crossing = reorderedCrossingEdges(indexToEdge);
+	} while (crossing);
+
+}
+
+bool NoCross::reorderedCrossingEdges(std::unordered_map<int, Edge>& indexToEdge) {
+
+	/* FIFO container of edges to reverse */
 	std::stack<Edge> edgesToReverse;
-	
-	// check for crossing edges
-	bool crossing = true;
-	while (crossing) {
 
-		// until crossing edges detected, assume no crossing
-		crossing = false;
+	std::unordered_map<int, Edge>::iterator iter0;
+	std::unordered_map<int, Edge>::iterator iter1;
 
-		std::unordered_map<int, Edge>::iterator iter0;
-		std::unordered_map<int, Edge>::iterator iter1;
+	for (iter0 = indexToEdge.begin(); iter0 != indexToEdge.end(); iter0++) {
+		for (iter1 = indexToEdge.begin(); iter1 != indexToEdge.end(); iter1++) {
+			if (iter0 != iter1) {
+				Edge edgeAB = iter0->second;
+				Edge edgeCD = iter1->second;
 
-		for (iter0 = indexToEdge.begin();iter0 != indexToEdge.end(); iter0++) {
-			for (iter1 = indexToEdge.begin(); iter1 != indexToEdge.end(); iter1++) {
-				if (iter0 != iter1) {
-					Edge edgeAB = iter0->second;
-					Edge edgeCD = iter1->second;
-					
-					if (edgeAB.intersects(edgeCD)) {
-						// iterate over edges between intersecting edges and reverse pointing order
+				if (edgeAB.intersects(edgeCD)) {
+					// iterate over edges between intersecting edges and reverse pointing order
 
-						int indexStart = edgeAB.p1.index;
-						int indexEnd = edgeCD.p2.index;
+					int indexStart = edgeAB.p1.index;
+					int indexEnd = edgeCD.p2.index;
 
-						int indexOfEdgeToReverse = edgeAB.p2.index;
-						int indexOfEdgeToReach = edgeCD.p1.index;
+					int indexOfEdgeToReverse = edgeAB.p2.index;
+					int indexOfEdgeToReach = edgeCD.p1.index;
 
-						// reconnect first edge
+					// reconnect first edge
 
-						// temporary storage of edgeAB.p2
-						Point pointToReconnect = edgeAB.p2;
+					// temporary storage of edgeAB.p2
+					Point pointToReconnect = edgeAB.p2;
 
-						edgeAB.p2 = edgeCD.p1;
-						indexToEdge.erase(edgeAB.p1.index);
-						indexToEdge.emplace(edgeAB.p1.index, edgeAB);
+					edgeAB.p2 = edgeCD.p1;
+					indexToEdge.erase(edgeAB.p1.index);
+					indexToEdge.emplace(edgeAB.p1.index, edgeAB);
 
-						indexToEdge.erase(edgeCD.p1.index);
+					indexToEdge.erase(edgeCD.p1.index);
 
-						// Find all edges to reverse, remove from index map and add to stack
+					// Find all edges to reverse, remove from index map and add to stack
 
-						while (indexOfEdgeToReverse != indexOfEdgeToReach) {
+					while (indexOfEdgeToReverse != indexOfEdgeToReach) {
 
-							Edge nextEdge = indexToEdge.at(indexOfEdgeToReverse);
-							edgesToReverse.push(nextEdge);
-							
-							indexToEdge.erase(indexOfEdgeToReverse);
+						Edge nextEdge = indexToEdge.at(indexOfEdgeToReverse);
+						edgesToReverse.push(nextEdge);
 
-							indexOfEdgeToReverse = nextEdge.p2.index;
-						}
+						indexToEdge.erase(indexOfEdgeToReverse);
 
-						// Reverse Edges on stack an insert back into index map
-						while (!edgesToReverse.empty()) {
-							Edge newEdge = edgesToReverse.top();
-							newEdge.reverse();
-							indexToEdge.emplace(newEdge.p1.index, newEdge);
-							edgesToReverse.pop();
-						}
-
-						edgeCD.p1 = pointToReconnect;
-						indexToEdge.emplace(edgeCD.p1.index, edgeCD);
-
-
-						// detected cross
-						crossing = true;
-						break;
+						indexOfEdgeToReverse = nextEdge.p2.index;
 					}
+
+					// Reverse Edges on stack an insert back into index map
+					while (!edgesToReverse.empty()) {
+						Edge newEdge = edgesToReverse.top();
+						newEdge.reverse();
+						indexToEdge.emplace(newEdge.p1.index, newEdge);
+						edgesToReverse.pop();
+					}
+
+					edgeCD.p1 = pointToReconnect;
+					indexToEdge.emplace(edgeCD.p1.index, edgeCD);
+
+					// detected cross
+					return true;
 				}
 			}
-			if (crossing) break;
 		}
 	}
 
+	return false;
+}
+
+void NoCross::edgeMapToIndexVector(std::vector<double> & distMat, std::unordered_map<int, Edge> & indexToEdge) {
 	bestPathIndizes.clear();
 
 	int indexPrev = indexToEdge.at(0).p2.index;
@@ -299,6 +276,34 @@ void NoCross::NextPointNoCross(){
 		indexPrev = indexNext;
 
 	} while (loopAgain);
+}
+
+void NoCross::NextPointNoCross(){
+
+	if (searched) {
+		throw std::runtime_error("Reset before running new permutation run");
+	}
+
+	// init timing
+	time_t start;
+	time(&start);
+
+	/* Distance Matrix */
+	std::vector<double> distMat = createDistMat(points);
+
+	/* mapping index to connecting edge */
+	std::unordered_map<int, Edge> indexToEdge;
+
+	// Basically what Shortest.takeClosestPoint does
+	shortestPathIndizes(distMat, indexToEdge);
+	
+	bestDist = 0;
+
+	// std::unordered_set < Point, Point::HashFunction > pointsVisited;
+	
+	iterateOverPath(indexToEdge);
+
+	edgeMapToIndexVector(distMat, indexToEdge);
 
 	// indexNext += distMat[indexNext];
 

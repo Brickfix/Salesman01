@@ -4,11 +4,11 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>--mode 3 --inputPoints 6 --points 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--mode 3</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>--mode 3 --inputPoints 6 --points 0</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>--mode 3</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

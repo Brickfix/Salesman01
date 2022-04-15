@@ -169,8 +169,8 @@ void NoCross::shortestPathIndizes(std::vector<double> & distMat, std::unordered_
 		indexLastPushed = currentBestNextIndex;
 		bestDist += bestDistanceToNext;
 	}
-
-	Point p1 = Point(points[indexLastPushed], points[indexLastPushed + 1], indexLastPushed);
+	
+	Point p1 = Point(points[indexLastPushed * 2], points[indexLastPushed * 2 + 1], indexLastPushed);
 	Point p2 = Point(points[0], points[1], 0);
 
 	indexToEdge.emplace(indexLastPushed, Edge(p1, p2));
@@ -256,7 +256,10 @@ bool NoCross::reorderedCrossingEdges(std::unordered_map<int, Edge>& indexToEdge)
 }
 
 void NoCross::edgeMapToIndexVector(std::vector<double> & distMat, std::unordered_map<int, Edge> & indexToEdge) {
+	
 	bestPathIndizes.clear();
+	bestDist = 0;
+
 
 	int indexPrev = indexToEdge.at(0).p2.index;
 
@@ -276,6 +279,8 @@ void NoCross::edgeMapToIndexVector(std::vector<double> & distMat, std::unordered
 		indexPrev = indexNext;
 
 	} while (loopAgain);
+
+
 }
 
 void NoCross::NextPointNoCross(){
@@ -296,16 +301,12 @@ void NoCross::NextPointNoCross(){
 
 	// Basically what Shortest.takeClosestPoint does
 	shortestPathIndizes(distMat, indexToEdge);
-	
-	bestDist = 0;
 
 	// std::unordered_set < Point, Point::HashFunction > pointsVisited;
 	
 	iterateOverPath(indexToEdge);
 
 	edgeMapToIndexVector(distMat, indexToEdge);
-
-	// indexNext += distMat[indexNext];
 
 
 	searched = true;

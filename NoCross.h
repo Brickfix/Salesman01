@@ -68,7 +68,8 @@ public:
 
 	/*
 	* Generates a path with the next point chosen as the closest point
-	* @param & distMat
+	* @param std::vector<double> &	 distMat
+	* @param std::unordered_map<int, Edge>& indexToEdge
 	*/
 	void shortestPathIndizes(std::vector<double> & distMat, std::unordered_map<int, Edge>& indexToEdge);
 
@@ -79,7 +80,10 @@ public:
 	/* Finds and reorders edges crossing each other */
 	bool reorderedCrossingEdges(std::unordered_map<int, Edge>& indexToEdge);
 
-	/* creates index containing solution */
+	/* 
+	* creates index containing solution
+	Resets bestPathIndizes and bestDest
+	*/
 	void edgeMapToIndexVector(std::vector<double>& distMat, std::unordered_map<int, Edge>& indexToEdge);
 
 };

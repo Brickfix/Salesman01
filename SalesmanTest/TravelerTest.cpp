@@ -5,6 +5,9 @@
 #include <exception>
 
 /**
+* @file
+* **TEST(TravelerTest, TestsInputs)**
+* 
 * Test the following invalid inputs:
 * - Vector containing points is uneven
 * - Vector containing points is empty
@@ -23,6 +26,9 @@ TEST(TravelerTest, TestsInputs) {
 }
 
 /**
+* @file
+* **TEST(TravelerTest, TestDefaults)**
+* 
 * Test a default input produces correct results
 */
 TEST(TravelerTest, TestDefaults) {
@@ -39,6 +45,9 @@ TEST(TravelerTest, TestDefaults) {
 }
 
 /**
+* @file
+* **TEST(TravelerTest, TestsOutputs)**
+* 
 * Asserts that for a known shortest path, the shortest path is actually found
 */
 TEST(TravelerTest, TestsOutputs) {
@@ -109,7 +118,12 @@ TEST(TravelerTest, TestsOutputs) {
 	ASSERT_NE(3, validCount1);
 }
 
-
+/**
+* @file
+* **int main(int argc, char** argv)**
+* 
+* Initializes the tests
+*/
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

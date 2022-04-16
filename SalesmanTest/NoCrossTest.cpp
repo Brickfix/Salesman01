@@ -3,7 +3,12 @@
 #include <vector>
 #include <limits>
 
-/** Checks that the overall output is correct */
+/** 
+* @file
+* **TEST(NoCrossTest, TestOutput)**
+* 
+* Checks that the overall output is correct
+*/
 TEST(NoCrossTest, TestOutput) {
 
 	// creates points in a configuration that will cause crossing edges
@@ -35,7 +40,13 @@ TEST(NoCrossTest, TestOutput) {
 	ASSERT_TRUE(testCross.getTimeToFinish() == -1) << msgReset;
 }
 
-/** Checks that the individual functions work correctly */
+/**
+* @file
+* **TEST(NoCrossTest, TestFunctions)**
+* 
+* Checks that the individual functions work correctly
+* 
+*/
 TEST(NoCrossTest, TestFunctions) {
 
 	std::vector<int> points{ 50, 50, 50, 99, 100, 100, 100, 50, 200, 75 };

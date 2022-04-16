@@ -16,12 +16,40 @@
 #include "NoCross.h"
 
 /**
-Finds a short path connecting all points
-Command line parameters:
-@param --points         number of points to generate
-@param --size           size of the area to generate points in
-@param --inputPoints    Number of points input via console
-@param --seed           seed for point generation
+* \mainpage
+* Welcome to my small project for finding a short path connecting a given amount of generated points.
+* 
+* 
+* \section intro_sec Introduction
+* This project was created as a hand-in for the university course *efficient programming* for my masters degree.
+* 
+* It is made up of two components:
+*  - the C++ code for generating points and finding a valid path
+*  - the Python code to create an interactive GUI
+* 
+* The main function can be used without the GUI as a command line tool.
+* See Salesman01.cpp for further reference.
+* 
+* \section install_sec Installation
+* To run and use the GUI, the C++ code must be compiled first. 
+* Easiest way to do this is to open the project in Microsoft Visual Studio Code (vscode)
+* in the .vscode folder, the *tasks.json* folder contains all neccessary commands to compile the code using the mignw  g++ compiler.
+* It might be neccessary to change "command" to point to the correct g++ executable.
+* 
+* After successfull installation, run the gui_builder.py
+* 
+* To create the docs, an installation of doxygen is required.
+*/
+
+/**
+* @file
+* 
+* Finds a short path connecting all points
+* Command line parameters:
+* @param --points         number of points to generate
+* @param --size           size of the area to generate points in
+* @param --inputPoints    Number of points input via console
+* @param --seed           seed for point generation
 */
 int main(int argc, char* argv[])
 {
@@ -173,10 +201,3 @@ int main(int argc, char* argv[])
 // Programm ausführen: STRG+F5 oder Menüeintrag "Debuggen" > "Starten ohne Debuggen starten"
 // Programm debuggen: F5 oder "Debuggen" > Menü "Debuggen starten"
 
-// Tipps für den Einstieg: 
-//   1. Verwenden Sie das Projektmappen-Explorer-Fenster zum Hinzufügen/Verwalten von Dateien.
-//   2. Verwenden Sie das Team Explorer-Fenster zum Herstellen einer Verbindung mit der Quellcodeverwaltung.
-//   3. Verwenden Sie das Ausgabefenster, um die Buildausgabe und andere Nachrichten anzuzeigen.
-//   4. Verwenden Sie das Fenster "Fehlerliste", um Fehler anzuzeigen.
-//   5. Wechseln Sie zu "Projekt" > "Neues Element hinzufügen", um neue Codedateien zu erstellen, bzw. zu "Projekt" > "Vorhandenes Element hinzufügen", um dem Projekt vorhandene Codedateien hinzuzufügen.
-//   6. Um dieses Projekt später erneut zu öffnen, wechseln Sie zu "Datei" > "Öffnen" > "Projekt", und wählen Sie die SLN-Datei aus.

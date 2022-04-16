@@ -48,6 +48,11 @@ public:
 	*/
 	static double calcDist(int x0, int y0, int x1, int y1);
 
+	/*
+	* Creates a distance mat
+	*/
+	std::vector<double> createDistMat(std::vector<int> points);
+
 protected:
 	/* Number of points */
 	int nPoints;
@@ -66,11 +71,6 @@ protected:
 	* Points
 	*/
 	std::vector<int> points;
-
-	/*
-	* Creates a distance mat
-	*/
-	std::vector<double> createDistMat(std::vector<int> points);
 
 };
 

@@ -137,8 +137,8 @@ void NoCross::shortestPathIndizes(std::vector<double> & distMat, std::unordered_
 	// starting at point index 0, later set to last pushed into indices
 	int indexLastPushed = 0;
 
+	// decrease computation time for increased size, tradeoff
 	std::set<int> indexes_visited;
-	// std::unordered_map<int, Edge> indexToEdge;
 
 	for (int i = 1; i < nPoints; i++) {
 
@@ -165,9 +165,9 @@ void NoCross::shortestPathIndizes(std::vector<double> & distMat, std::unordered_
 
 		indexToEdge.emplace(indexLastPushed, Edge(p1, p2));
 
+		// might be unnecessary, RELIC from old code 
 		bestPathIndizes.push_back(currentBestNextIndex);
 		indexLastPushed = currentBestNextIndex;
-		bestDist += bestDistanceToNext;
 	}
 	
 	Point p1 = Point(points[indexLastPushed * 2], points[indexLastPushed * 2 + 1], indexLastPushed);

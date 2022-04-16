@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../Traveler.h"
+#include "../BruteForce.h"
 #include <vector>
 #include <utility>
 #include <exception>
@@ -23,8 +23,8 @@ TEST(TravelerTest, TestsInputs) {
 }
 
 TEST(TravelerTest, TestDefaults) {
-	int pointsArr[] = { 50,  50,  50,  100, 100, 100, 100, 50 };
-	std::vector<int> points(pointsArr, pointsArr + sizeof(pointsArr) / sizeof(int));
+
+	std::vector<int> points { 50,  50,  50,  100, 100, 100, 100, 50 };
 
 	Traveler defaultTestTraveler(points);
 
@@ -45,11 +45,10 @@ TEST(TravelerTest, TestsOutputs) {
 	* Expected indexes will either be [1, 2, 3] or [3, 2, 1]
 	* The minimum distance is 200
 	*/
-	//					p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y
-	int pointsArr[] = { 50,  50,  50,  100, 100, 100, 100, 50 };
-	std::vector<int> points(pointsArr, pointsArr + sizeof(pointsArr) / sizeof(int));
+	//						p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y
+	std::vector<int> points { 50,  50,  50,  100, 100, 100, 100, 50 };
 
-	Traveler fourPoints(points);
+	BruteForce fourPoints(points);
 	fourPoints.iterateThroughPoints();
 
 	EXPECT_TRUE(fourPoints.hasSearched()) << "Searched flag not set to true";

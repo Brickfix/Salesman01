@@ -2,6 +2,8 @@ from subprocess import Popen, PIPE
 import os
 from typing import Tuple, Sequence, Union
 
+'''@file'''
+
 def command_list(
                 new_points: Union[int, None],
                 input_points: list,

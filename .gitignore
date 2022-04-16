@@ -10,6 +10,8 @@
 /.vs
 /.vscode
 /__pycache__
+/docs/html
+/docs/latex
 
 # libraries
 *.dll

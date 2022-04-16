@@ -15,6 +15,14 @@
 #include "Shortest.h"
 #include "NoCross.h"
 
+/**
+Finds a short path connecting all points
+Command line parameters:
+@param --points         number of points to generate
+@param --size           size of the area to generate points in
+@param --inputPoints    Number of points input via console
+@param --seed           seed for point generation
+*/
 int main(int argc, char* argv[])
 {
 

@@ -9,12 +9,13 @@ class Shortest : public Traveler
 {
 public:
 
-	/*
+	/**
 	* Initializes Shortes class
+	* @param inputPoints std::vector<int>
 	*/
 	Shortest(std::vector<int> inputPoints);
 
-	/*
+	/**
 	* Takes the next point based on the closest point
 	*/
 	void takeClosestPoint();

@@ -4,7 +4,7 @@
 #include <utility>
 #include <exception>
 
-/*
+/**
 * Test the following invalid inputs:
 * - Vector containing points is uneven
 * - Vector containing points is empty
@@ -22,6 +22,9 @@ TEST(TravelerTest, TestsInputs) {
 
 }
 
+/**
+* Test a default input produces correct results
+*/
 TEST(TravelerTest, TestDefaults) {
 
 	std::vector<int> points { 50,  50,  50,  100, 100, 100, 100, 50 };
@@ -35,7 +38,7 @@ TEST(TravelerTest, TestDefaults) {
 	ASSERT_EQ(-1, defaultTestTraveler.getTimeToFindBest()) << "timeToFindBest must be -1 if no best path search was yet conducted";
 }
 
-/*
+/**
 * Asserts that for a known shortest path, the shortest path is actually found
 */
 TEST(TravelerTest, TestsOutputs) {

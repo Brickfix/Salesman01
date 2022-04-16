@@ -12,13 +12,13 @@ class BruteForce : public Traveler
 {
 public:
 
-	/*
+	/**
 	* Iterates through the given points
 	* Returns the indexes and the best distance
 	*/
 	void iterateThroughPoints();
 
-	/*
+	/**
 	* Permutates only half of the point while
 	* respecting that backwards paths don't add
 	* any new information, left-round or right-round
@@ -27,7 +27,7 @@ public:
 	void permutateHalf();
 
 
-	/*
+	/**
 	* Initialize class with points vector
 	* @param points: pointer to vector containing points
 	*/

@@ -153,23 +153,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BruteForce.cpp" />
-    <ClCompile Include="imgfuncs.cpp" />
-    <ClCompile Include="NoCross.cpp" />
-    <ClCompile Include="pathcalcs.cpp" />
-    <ClCompile Include="pointgeneration.cpp" />
-    <ClCompile Include="Salesman01.cpp" />
-    <ClCompile Include="Shortest.cpp" />
-    <ClCompile Include="Traveler.cpp" />
+    <ClInclude Include="Salesman\cpp\BruteForce.h" />
+    <ClInclude Include="Salesman\cpp\NoCross.h" />
+    <ClInclude Include="Salesman\cpp\pathcalcs.h" />
+    <ClInclude Include="Salesman\cpp\pointgeneration.h" />
+    <ClInclude Include="Salesman\cpp\Shortest.h" />
+    <ClInclude Include="Salesman\cpp\Traveler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BruteForce.h" />
-    <ClInclude Include="imgfuncs.h" />
-    <ClInclude Include="NoCross.h" />
-    <ClInclude Include="pathcalcs.h" />
-    <ClInclude Include="pointgeneration.h" />
-    <ClInclude Include="Shortest.h" />
-    <ClInclude Include="Traveler.h" />
+    <ClCompile Include="Salesman\cpp\BruteForce.cpp" />
+    <ClCompile Include="Salesman\cpp\NoCross.cpp" />
+    <ClCompile Include="Salesman\cpp\pathcalcs.cpp" />
+    <ClCompile Include="Salesman\cpp\pointgeneration.cpp" />
+    <ClCompile Include="Salesman\cpp\Salesman01.cpp" />
+    <ClCompile Include="Salesman\cpp\Shortest.cpp" />
+    <ClCompile Include="Salesman\cpp\Traveler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

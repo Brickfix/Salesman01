@@ -171,30 +171,7 @@ int main(int argc, char* argv[])
     std::cout << minDistance << std::endl;
     std::cout << timeToBest << std::endl;
     std::cout << timeToFinish << std::endl;
-    // std::cout << std::endl;
-    /*
-    std::cout << "Shortest distance is: " << bestDistance << std::endl;
-    std::cout << "Best solution found after: " << DaBoss.getTimeToFindBest()<< "s" << std::endl;
-    std::cout << "Total time to permutate all: " << DaBoss.getTimeToFinish() << "s" << std::endl;
-
-
-    int pointRadius = 20;
-    BLImage img = createImage(points, points.size(), pointRadius);
     
-    std::string pointsstring = std::to_string(pointsTotal);
-    std::string name("_points.bmp");
-    
-    name = pointsstring + name;
-    
-    saveBLImg(img, name.c_str());
-    
-    drawBestRoute(img, points, bestIndexes);
-    
-    std::string drawName = ("_best_route.bmp");
-    name = pointsstring + drawName;
-    
-    saveBLImg(img, name.c_str());
-    */
     return 0;
 }
 

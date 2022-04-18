@@ -2,7 +2,9 @@ from subprocess import Popen, PIPE
 import os
 from typing import Tuple, Sequence, Union
 
-'''@file'''
+"""! @package docstring
+Hi does this work?
+"""
 
 def command_list(
                 new_points: Union[int, None],

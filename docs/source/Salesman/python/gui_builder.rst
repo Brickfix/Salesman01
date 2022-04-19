@@ -23,7 +23,14 @@ The GUI can be directly run from the console with following command:
 
 Following window will be displayed:
 
-.. warning:: 
-    TODO add image
-    TODO add explanation
+.. image:: GUI.png
 
+The path calculation can be started by clicking *run*.
+Two options exist concerning the points:
+ - use existing points, adding or removing custom points
+ - generate new points
+
+
+.. warning::
+    Select the calculation program with care,
+    as permution based calculations require significantly more runtime!

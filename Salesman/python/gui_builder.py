@@ -3,7 +3,7 @@ from tkinter import *
 from typing import Sequence
 import numpy as np
 
-from communicator import run_salesman_exe
+from Salesman.python.communicator import run_salesman_exe
 
 class SalesGUI:
 
@@ -40,8 +40,16 @@ class SalesGUI:
         '''
         Initializes the GUI
         
+        Parameters
+        -----------
+        n_points: int
+            Number of points
         canvas_size: int
             size of the Canvas in pixel
+        radius: int
+            Radius of an individual point
+        title: str
+            Title of the window displayed on screen
         
         
         '''
@@ -103,6 +111,11 @@ class SalesGUI:
     def create_frame_custom(self, master):
         '''
         Creates a Frame with widgets for custom points
+
+        Parameters
+        -----------
+        master: tkinter.Frame
+            Frame to add to
         '''
         self.custom_points_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
         self.custom_points_frame.grid(column=0, row=0, sticky=[NW, E], pady=5)
@@ -132,6 +145,11 @@ class SalesGUI:
     def create_frame_random(self, master):
         '''
         Creates a Frame with windgets for random points
+
+        Parameters
+        -----------
+        master: tkinter.Frame
+            Frame to add to
         '''
         self.random_points_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
         self.random_points_frame.grid(column=0, row=1, sticky=[NW, E], pady=5)
@@ -169,6 +187,11 @@ class SalesGUI:
     def create_frame_program(self, master):
         '''
         creates a frame where the desired program option can be selected
+
+        Parameters
+        -----------
+        master: tkinter.Frame
+            Frame to add to
         '''
         
         program_frame = Frame(master, bd=2, relief=GROOVE, padx=5, pady=5)
@@ -185,6 +208,11 @@ class SalesGUI:
     def create_frame_info(self, master):
         '''
         creates the frame containing information about the last run
+
+        Parameters
+        -----------
+        master: tkinter.Frame
+            Frame to add to
         '''
 
         info_frame = Frame(master, bd=2, relief=GROOVE ,padx=5, pady=5)

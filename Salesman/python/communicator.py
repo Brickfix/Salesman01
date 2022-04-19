@@ -16,7 +16,7 @@ def command_list(
     creates the command list
     faciliates testing
     
-    Parameters:
+    Parameters
     -----------
     new_points: int or None
         Number of new points, following "--points" command.
@@ -37,7 +37,7 @@ def command_list(
     mode: int
         Mode to execute .exe in
 
-    Returns:
+    Returns
     --------
     commands: list
         list containing the commands for executable
@@ -102,7 +102,7 @@ def convert_output(output, new_points, n_points_input):
     '''
     converts the output list to usefull output parameters
     
-    Parameters:
+    Parameters
     -----------
     output: list
         [out.strip() for out in sales_call.stdout.readlines()]
@@ -111,7 +111,7 @@ def convert_output(output, new_points, n_points_input):
     n_points_intput: int
         number of already given points
 
-    Returns:
+    Returns
     --------
     time_total: float
         Time to run entire path finding algorithm
@@ -150,14 +150,14 @@ def run_salesman_exe(
     runs the Salesman01.exe in a subprocess and returns the results
     
     Parameters
-    ----------
+    -----------
     commands: list
         list of strings containing the desired commands
     exe_name: str
         name of the executable for path calculations
 
     Returns
-    -------
+    --------
     time_total: float
         Time required to run path finding algorithm
     time_for_best: float

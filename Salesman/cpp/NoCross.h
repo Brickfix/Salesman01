@@ -21,7 +21,7 @@ public:
 	*/
 	Point();
 
-	/*
+	/**
 	Initialize new point
 	@param int x
 	@param int y

@@ -28,7 +28,7 @@
 *  - the Python code to create an interactive GUI
 * 
 * The main function can be used without the GUI as a command line tool.
-* See Salesman01.cpp for further reference.
+* See Salesman for further reference.
 * 
 * \section install_sec Installation
 * To run and use the GUI, the C++ code must be compiled first. 
@@ -36,9 +36,7 @@
 * in the .vscode folder, the *tasks.json* folder contains all neccessary commands to compile the code using the mignw  g++ compiler.
 * It might be neccessary to change "command" to point to the correct g++ executable.
 * 
-* After successfull installation, run the gui_builder.py
-* 
-* To create the docs, an installation of doxygen is required.
+* After successfull installation, run the GUI Builder.
 */
 
 /**

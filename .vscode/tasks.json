@@ -15,7 +15,7 @@
 				"Shortest.cpp",
 				"NoCross.cpp",
 				"-o",
-				"${fileDirname}\\${fileBasenameNoExtension}.exe"
+				"..\\..\\${fileBasenameNoExtension}.exe"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

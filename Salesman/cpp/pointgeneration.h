@@ -5,6 +5,8 @@
 #include <vector>
 
 /**
+* @file
+* 
 * Creates a vector of points.
 *
 * Even entries represent y-coords.

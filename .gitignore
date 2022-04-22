@@ -22,6 +22,13 @@
 *.obj
 *.exe
 
+# objectes
+.cache
+.deps
+.recipe
+.iobj
+.ipdb
+
 # logs
 *.tlog
 *.log

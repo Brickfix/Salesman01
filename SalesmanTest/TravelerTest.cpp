@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../BruteForce.h"
+#include "../Salesman/cpp/BruteForce.h"
 #include <vector>
 #include <utility>
 #include <exception>

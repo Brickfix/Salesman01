@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "../NoCross.h"
+#include "../Salesman/cpp/NoCross.h"
 #include <vector>
 #include <limits>
 

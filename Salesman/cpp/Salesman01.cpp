@@ -14,6 +14,7 @@
 #include "BruteForce.h"
 #include "Shortest.h"
 #include "NoCross.h"
+#include "CudaPath.cuh"
 
 /**
 * \mainpage
@@ -153,6 +154,15 @@ int main(int argc, char* argv[])
         minDistance = crossOut.getBestDist();
         timeToBest = crossOut.getTimeToFindBest();
         timeToFinish = crossOut.getTimeToFinish();
+    }
+    else if (mode == 4) {
+        CudaPath cuda = CudaPath(points);
+        cuda.runParticles();
+
+        bestIndexes = cuda.getBestPathIndizes();
+        minDistance = cuda.getBestDist();
+        timeToBest = cuda.getTimeToFindBest();
+        timeToFinish = cuda.getTimeToFinish();
     }
 
     std::vector<int>::iterator iter;

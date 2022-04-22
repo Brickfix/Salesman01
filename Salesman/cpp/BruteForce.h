@@ -5,7 +5,7 @@
 #include <utility>
 #include "Traveler.h"
 
-/*
+/**
 * Class Traveler finds the shortest path through given points
 */
 class BruteForce : public Traveler

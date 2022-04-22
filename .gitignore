@@ -14,6 +14,7 @@
 /docs/latex
 /docs/build
 /docs/xml
+/Release
 
 # libraries
 *.dll

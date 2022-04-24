@@ -12,3 +12,4 @@ This folder contains all C++ Functions and classes
     BruteForce
     Shortest
     NoCross
+    CudaPath

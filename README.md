@@ -1,6 +1,6 @@
 # Welcome to my Efficient Programming Course Hand-in
 
-This repository contains the entire code of the hand-in, including the file to generate the documentation.
+This repository contains the entire code of the hand-in, including the files to generate the documentation.
 
 ## Installation
 

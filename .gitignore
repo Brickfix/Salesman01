@@ -20,7 +20,11 @@
 *.dll
 *.lib
 *.obj
+
+# compiled
 *.exe
+*.exp
+*.pdb
 
 # objectes
 .cache
@@ -37,4 +41,4 @@
 *.pyc
 
 # other
-.pdf
+README.pdf

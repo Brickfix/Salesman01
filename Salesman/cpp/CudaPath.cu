@@ -322,11 +322,14 @@ void CudaPath::runParticles() {
 
 	// find shortest total distance travelled by a particle
 	int bestParticle;
-	float bestDistance = std::numeric_limits<double>::max();
-	for (int i = 0; i < nParticles; i++) {
-		if (bestDistance > totalDistances[i]) {
-			bestDistance = totalDistances[i];
-			bestParticle = i;
+	float bestDistance = std::numeric_limits<float>::max();
+	
+	// iter defined out of loop for debugging
+	int iter;
+	for (iter = 0; iter < nParticles; iter++) {
+		if (bestDistance > totalDistances[iter]) {
+			bestDistance = totalDistances[iter];
+			bestParticle = iter;
 			timeToFindBest = difftime(time(NULL), start);
 		}
 	}

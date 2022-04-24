@@ -4,9 +4,10 @@
 		{
 			"type": "cppbuild",
 			"label": "C/C++: g++.exe Aktive Datei kompilieren",
-			"command": "C:\\Program Files (x86)\\msys64\\mingw64\\bin\\g++.exe",
+			//"command": "C:\\Program Files (x86)\\msys64\\mingw64\\bin\\g++.exe",
+			"command": "nvcc",
 			"args": [
-				"-fdiagnostics-color=always",
+				//"-fdiagnostics-color=always",
 				"-g",
 				"Salesman01.cpp",
 				"pointgeneration.cpp",
@@ -14,6 +15,7 @@
 				"BruteForce.cpp",
 				"Shortest.cpp",
 				"NoCross.cpp",
+				"CudaPath.cu",
 				"-o",
 				"..\\..\\${fileBasenameNoExtension}.exe"
 			],

@@ -2,9 +2,6 @@ from subprocess import Popen, PIPE
 import os
 from typing import Tuple, Sequence, Union
 
-"""! @package docstring
-Hi does this work?
-"""
 
 def command_list(
                 new_points: Union[int, None],
@@ -124,6 +121,9 @@ def convert_output(output, new_points, n_points_input):
     output_points: list
         list cotaining the point coordinates
     '''
+
+    if(len(output) == 0):
+        raise RuntimeError("No Output from exe")
 
     time_total, time_best, min_distance = float(output[-1]), float(output[-2]), float(output[-3])
 

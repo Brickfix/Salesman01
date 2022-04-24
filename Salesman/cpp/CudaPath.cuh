@@ -12,6 +12,10 @@
 */
 class CudaPath : public Traveler {
 public:
+	/**
+	 * @brief Construct a new Cuda Path object
+	 * 
+	 */
 	CudaPath(std::vector<int>points);
 
 	/**

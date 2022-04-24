@@ -61,8 +61,11 @@ void particleGoBrrt(float* distMat, float* distances, int* setIndizes, float* ro
 
 		// fill distances from startIndex Point with distances to other points
 		for (int j = 0; j < nPoints; j++) {
-			// distances[threadBlockIdx*nPoints + j] = std::exp(distMat[startIndex * j + nPoints] / -100);
-			distances[threadBlockIdx*nPoints + j] = pow(1/distMat[startIndex * j + nPoints], 4);
+			// distances[threadBlockIdx*nPoints + j] = std::exp(distMat[startIndex * nPoints + j] / -100);
+			distances[threadBlockIdx*nPoints + j] = pow(1/distMat[startIndex * nPoints + j], 3);
+
+			// alternativly calculate externally
+			// distances[threadBlockIdx*nPoints + j] = powMat[startIndex * nPoints + j];
 		}
 
 		// set already used points to 0
@@ -263,7 +266,7 @@ void CudaPath::runParticles() {
 	int threads = 256;
 	int nParticles = threadBlocks * threads;
 
-	// allocate memory and init distance matrix
+	// allocate memory and init distance matrix and pow distance matrix
 	float* distMatSimple, * d_distMatSimple;
 	distMatSimple = (float*)malloc(nPoints * nPoints * sizeof(float));
 	cudaMalloc(&d_distMatSimple, nPoints * nPoints * sizeof(float));
@@ -326,7 +329,7 @@ void CudaPath::runParticles() {
 	// find shortest total distance travelled by a particle
 	int bestParticle;
 	float bestDistance = std::numeric_limits<float>::max();
-	
+
 	// iter defined out of loop for debugging
 	int iter;
 	for (iter = 0; iter < nParticles; iter++) {

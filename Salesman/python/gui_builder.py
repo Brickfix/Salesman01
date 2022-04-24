@@ -427,7 +427,8 @@ class SalesGUI:
             )
         elif self.mode_var.get() == self.POINT_MODE_RANDOM:
             
-            p = int(self.amount_input.get())
+            # if no number of points set use current number of points
+            p = int(self.amount_input.get()) if (len(self.amount_input.get()) > 0) else len(self.indizes)
 
             if self.random_mode.get() == self.RANDOM_MODE_ADD:
                 # add additional specified points

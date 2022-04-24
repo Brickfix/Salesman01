@@ -61,11 +61,12 @@ void particleGoBrrt(float* distMat, float* distances, int* setIndizes, float* ro
 
 		// fill distances from startIndex Point with distances to other points
 		for (int j = 0; j < nPoints; j++) {
-			distances[threadBlockIdx*nPoints + j] = std::exp(distMat[startIndex * j + nPoints] / -100);
+			// distances[threadBlockIdx*nPoints + j] = std::exp(distMat[startIndex * j + nPoints] / -100);
+			distances[threadBlockIdx*nPoints + j] = pow(1/distMat[startIndex * j + nPoints], 4);
 		}
 
 		// set already used points to 0
-		for (int j = 0; j < nPoints; j++) {
+		for (int j = 0; j < i; j++) {
 			distances[threadBlockIdx*nPoints + setIndizes[threadBlockIdx * nPoints + j]] = 0.0;
 		}
 
@@ -309,9 +310,11 @@ void CudaPath::runParticles() {
 	cudaMemcpy(d_rolls, rolls, nParticles * nPoints * sizeof(float), cudaMemcpyHostToDevice);
 	cudaMemcpy(d_setIndizes, setIndizes, nParticles * nPoints * sizeof(int), cudaMemcpyHostToDevice);
 	
-
-
+	// call functions
 	particleGoBrrt << <threadBlocks, threads>> > (d_distMatSimple, d_distances, d_setIndizes, d_rolls, d_totalDistances, nPoints);
+	
+	// synch
+	cudaDeviceSynchronize();
 
 	// copy back results
 	cudaMemcpy(setIndizes, d_setIndizes, nPoints * nParticles * sizeof(int), cudaMemcpyDeviceToHost);
